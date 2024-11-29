@@ -1,17 +1,15 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/Button/Button";
+import Card from "@/components/Card/Card";
+import Dropdown from "@/components/Dropdown/Dropdown";
+import { DropdownItemProps } from "@/components/Dropdown/DropdownTypes";
+import { User, CreditCard, Settings, Keyboard, UserPlus, Mail, MessageSquare, MoreHorizontalIcon } from "lucide-react";
 import { toast } from "sonner";
 
 export default function Home() {
+
   return (
     <div className="p-4">
-      <Button variant="default" className="mx-2" onClick={() =>
-        toast("Event has been created", {
-          description: "Sunday, December 03, 2023 at 9:00 AM",
-        })
-      }>Default Button</Button>
-      <Button variant="destructive">Destructive Button</Button>
-      <Button variant="outline">Outline Button</Button>
-      <Button variant="secondary">Secondary Button</Button>
+      HomePage
     </div>
   );
 }
