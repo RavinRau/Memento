@@ -1,0 +1,45 @@
+:root {
+  /* Primary */
+  --primary-100: #18181B;
+  --primary-80: #27272A;
+  --primary-60: #3F3F46;
+  --primary-40: #52525B;
+  --primary-20: #71717A;
+  --primary-10: #A1A1AA;
+  --primary-5: #D4D4D8;
+  --primary-2: #E4E4E7;
+
+  /* Secondary */
+  --secondary-100: #F4F4F5;
+  --secondary-80: #E4E4E7;
+  --secondary-60: #D4D4D8;
+  --secondary-40: #A1A1AA;
+  --secondary-20: #71717A;
+  --secondary-10: #52525B;
+  --secondary-5: #3F3F46;
+  --secondary-2: #27272A;
+
+  /* Destructive */
+  --destructive-100: #EF4444;
+  --destructive-80: #DC2626;
+  --destructive-60: #B91C1C;
+  --destructive-40: #991B1B;
+  --destructive-20: #7F1D1D;
+  --destructive-10: #450A0A;
+
+  /* Accent */
+  --accent-100: #F4F4F5;
+  --accent-foreground: #18181B;
+
+  /* Background */
+  --background: #FFFFFF;
+  --foreground: #09090B;
+
+  /* Border & Input */
+  --border: #E4E4E7;
+  --input: #E4E4E7;
+  --ring: #18181B;
+
+  /* Radius */
+  --radius: 0.5rem;
+} 
