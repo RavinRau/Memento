@@ -1,25 +1,41 @@
 :root {
-  /* Primary */
-  --primary-100: #18181B;
-  --primary-80: #27272A;
-  --primary-60: #3F3F46;
-  --primary-40: #52525B;
-  --primary-20: #71717A;
-  --primary-10: #A1A1AA;
-  --primary-5: #D4D4D8;
-  --primary-2: #E4E4E7;
 
-  /* Secondary */
-  --secondary-100: #F4F4F5;
-  --secondary-80: #E4E4E7;
-  --secondary-60: #D4D4D8;
-  --secondary-40: #A1A1AA;
-  --secondary-20: #71717A;
-  --secondary-10: #52525B;
-  --secondary-5: #3F3F46;
-  --secondary-2: #27272A;
+  --primary-100: #3275F8;
+  --primary-90: #478AF9;
+  --primary-80: #5C9FFA;
+  --primary-70: #71B4FB;
+  --primary-60: #86C9FC;
+  --primary-50: #9BDEFD;
+  --primary-40: #B0F3FE;
+  --primary-30: #C5F8FF;
+  --primary-20: #DAFCFF;
+  --primary-10: #EFFFFF;
 
-  /* Destructive */
+  --secondary-100: #38D200;
+  --secondary-90: #4CE614;
+  --secondary-80: #60FA28;
+  --secondary-70: #74FF3C;
+  --secondary-60: #88FF50;
+  --secondary-50: #9CFF64;
+  --secondary-40: #B0FF78;
+  --secondary-30: #C4FF8C;
+  --secondary-20: #D8FFA0;
+  --secondary-10: #ECFFB4;
+
+  /* Neutral Colors */
+  --neutral-100: #18181B;
+  --neutral-90: #27272A;
+  --neutral-80: #3F3F46;
+  --neutral-70: #52525B;
+  --neutral-60: #71717A;
+  --neutral-50: #A1A1AA;
+  --neutral-40: #D4D4D8;
+  --neutral-30: #E4E4E7;
+  --neutral-20: #F4F4F5;
+  --neutral-10: #FAFAFA;
+  --neutral-0: #FFFFFF;
+
+  /* Destructive Colors */
   --destructive-100: #EF4444;
   --destructive-80: #DC2626;
   --destructive-60: #B91C1C;
@@ -27,18 +43,28 @@
   --destructive-20: #7F1D1D;
   --destructive-10: #450A0A;
 
-  /* Accent */
+  /* Accent Colors */
   --accent-100: #F4F4F5;
   --accent-foreground: #18181B;
 
-  /* Background */
+  /* Background Colors */
   --background: #FFFFFF;
   --foreground: #09090B;
 
-  /* Border & Input */
+  /* UI Elements */
   --border: #E4E4E7;
   --input: #E4E4E7;
-  --ring: #18181B;
+  --ring: #3275F8;  /* Updated to match primary color */
+  --muted: #F4F4F5;
+  --muted-foreground: #71717A;
+
+  /* Card Colors */
+  --card: #FFFFFF;
+  --card-foreground: #09090B;
+
+  /* Popover Colors */
+  --popover: #FFFFFF;
+  --popover-foreground: #09090B;
 
   /* Radius */
   --radius: 0.5rem;

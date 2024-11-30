@@ -9,6 +9,7 @@ import {
 import { CardProps } from './CardTypes';
 import { cn } from '@/lib/utils';
 import { HoverBorderGradient } from '../ui/hover-border-gradient';
+import { useTruncateText } from '@/hooks/useTruncateText';
 
 export function Card({
   className,
@@ -18,9 +19,10 @@ export function Card({
   children,
   ...props
 }: CardProps) {
+
   return (
     <HoverBorderGradient
-      containerClassName="w-[25rem]"
+      containerClassName="w-full"
       className={className}
     >
       <CardUI 
