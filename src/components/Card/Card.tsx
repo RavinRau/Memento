@@ -1,15 +1,10 @@
-"use client";
-import * as React from 'react';
-import {
-  CardUI,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from '../ui/card';
-import { CardProps } from './CardTypes';
-import { cn } from '@/lib/utils';
-import { HoverBorderGradient } from '../ui/hover-border-gradient';
-import { useTruncateText } from '@/hooks/useTruncateText';
+'use client'
+import * as React from 'react'
+import { CardUI, CardContent, CardHeader, CardTitle } from '../ui/card'
+import { CardProps } from './CardTypes'
+import { cn } from '@/lib/utils'
+import { HoverBorderGradient } from '../ui/hover-border-gradient'
+import { useTruncateText } from '@/hooks/useTruncateText'
 
 export function Card({
   className,
@@ -19,16 +14,9 @@ export function Card({
   children,
   ...props
 }: CardProps) {
-
   return (
-    <HoverBorderGradient
-      containerClassName="w-full"
-      className={className}
-    >
-      <CardUI 
-        className={cn("w-full h-full bg-background border rounded-lg", className)} 
-        {...props}
-      >
+    <HoverBorderGradient containerClassName="w-full" className={className}>
+      <CardUI className={cn('w-full h-full bg-background border rounded-lg', className)} {...props}>
         {(title || description) && (
           <CardHeader>
             <CardTitle>{title}</CardTitle>
@@ -37,7 +25,7 @@ export function Card({
         <CardContent className={classNameChildren}>{children}</CardContent>
       </CardUI>
     </HoverBorderGradient>
-  );
+  )
 }
 
-export default Card;
+export default Card

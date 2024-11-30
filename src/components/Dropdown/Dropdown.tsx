@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,9 +12,9 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
-import { cn, isNil, isString } from "@/lib/utils";
-import { DropdownItemProps, DropdownProps } from "./DropdownTypes";
+} from '../ui/dropdown-menu'
+import { cn, isNil, isString } from '@/lib/utils'
+import { DropdownItemProps, DropdownProps } from './DropdownTypes'
 
 export const Dropdown = ({
   label,
@@ -25,30 +25,30 @@ export const Dropdown = ({
   disabled,
   align,
 }: DropdownProps) => {
-  const renderMenuItems = (data?: DropdownItemProps[], parentKey = "") => {
+  const renderMenuItems = (data?: DropdownItemProps[], parentKey = '') => {
     return data?.map((i, index) => {
-      const itemKey = isString(i.text) ? i.text : i.key ?? index;
-      const key = `${parentKey}${itemKey}-${index}`;
+      const itemKey = isString(i.text) ? i.text : (i.key ?? index)
+      const key = `${parentKey}${itemKey}-${index}`
 
       const renderDropdownItem = () => (
         <div
-          className={cn("flex items-center w-full", {
-            "cursor-not-allowed": i.disabled,
+          className={cn('flex items-center w-full', {
+            'cursor-not-allowed': i.disabled,
           })}
         >
           <span className="pr-2">{i.icon}</span>
           <span>{i.text}</span>
           <DropdownMenuShortcut>{i.shortcut}</DropdownMenuShortcut>
         </div>
-      );
+      )
 
       switch (i.type) {
-        case "label":
-          return <DropdownMenuLabel key={key}>{i.text}</DropdownMenuLabel>;
-        case "separator":
-          return <DropdownMenuSeparator key={`separator-${key}`} />;
-        case "item":
-          const itemContent = renderDropdownItem();
+        case 'label':
+          return <DropdownMenuLabel key={key}>{i.text}</DropdownMenuLabel>
+        case 'separator':
+          return <DropdownMenuSeparator key={`separator-${key}`} />
+        case 'item':
+          const itemContent = renderDropdownItem()
           return (
             <DropdownMenuItem
               key={key}
@@ -58,14 +58,14 @@ export const Dropdown = ({
             >
               {itemContent}
             </DropdownMenuItem>
-          );
-        case "group":
+          )
+        case 'group':
           return (
             <DropdownMenuGroup key={`group-${key}`}>
               {renderMenuItems(isNil(i.items) ? [] : i.items, `group-${key}-`)}
             </DropdownMenuGroup>
-          );
-        case "submenu":
+          )
+        case 'submenu':
           return (
             <DropdownMenuSub key={`submenu-${key}`}>
               <DropdownMenuSubTrigger disabled={i.disabled}>
@@ -73,17 +73,14 @@ export const Dropdown = ({
               </DropdownMenuSubTrigger>
               <DropdownMenuPortal>
                 <DropdownMenuSubContent className={i.className}>
-                  {renderMenuItems(
-                    isNil(i.items) ? [] : i.items,
-                    `submenu-${key}-`
-                  )}
+                  {renderMenuItems(isNil(i.items) ? [] : i.items, `submenu-${key}-`)}
                 </DropdownMenuSubContent>
               </DropdownMenuPortal>
             </DropdownMenuSub>
-          );
+          )
       }
-    });
-  };
+    })
+  }
 
   return (
     <DropdownMenu>
@@ -94,7 +91,7 @@ export const Dropdown = ({
         {renderMenuItems(data)}
       </DropdownMenuContent>
     </DropdownMenu>
-  );
-};
+  )
+}
 
-export default Dropdown;
+export default Dropdown

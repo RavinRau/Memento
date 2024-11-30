@@ -1,71 +1,70 @@
 :root {
+  --primary-100: #3275f8;
+  --primary-90: #478af9;
+  --primary-80: #5c9ffa;
+  --primary-70: #71b4fb;
+  --primary-60: #86c9fc;
+  --primary-50: #9bdefd;
+  --primary-40: #b0f3fe;
+  --primary-30: #c5f8ff;
+  --primary-20: #dafcff;
+  --primary-10: #efffff;
 
-  --primary-100: #3275F8;
-  --primary-90: #478AF9;
-  --primary-80: #5C9FFA;
-  --primary-70: #71B4FB;
-  --primary-60: #86C9FC;
-  --primary-50: #9BDEFD;
-  --primary-40: #B0F3FE;
-  --primary-30: #C5F8FF;
-  --primary-20: #DAFCFF;
-  --primary-10: #EFFFFF;
-
-  --secondary-100: #38D200;
-  --secondary-90: #4CE614;
-  --secondary-80: #60FA28;
-  --secondary-70: #74FF3C;
-  --secondary-60: #88FF50;
-  --secondary-50: #9CFF64;
-  --secondary-40: #B0FF78;
-  --secondary-30: #C4FF8C;
-  --secondary-20: #D8FFA0;
-  --secondary-10: #ECFFB4;
+  --secondary-100: #38d200;
+  --secondary-90: #4ce614;
+  --secondary-80: #60fa28;
+  --secondary-70: #74ff3c;
+  --secondary-60: #88ff50;
+  --secondary-50: #9cff64;
+  --secondary-40: #b0ff78;
+  --secondary-30: #c4ff8c;
+  --secondary-20: #d8ffa0;
+  --secondary-10: #ecffb4;
 
   /* Neutral Colors */
-  --neutral-100: #18181B;
-  --neutral-90: #27272A;
-  --neutral-80: #3F3F46;
-  --neutral-70: #52525B;
-  --neutral-60: #71717A;
-  --neutral-50: #A1A1AA;
-  --neutral-40: #D4D4D8;
-  --neutral-30: #E4E4E7;
-  --neutral-20: #F4F4F5;
-  --neutral-10: #FAFAFA;
-  --neutral-0: #FFFFFF;
+  --neutral-100: #18181b;
+  --neutral-90: #27272a;
+  --neutral-80: #3f3f46;
+  --neutral-70: #52525b;
+  --neutral-60: #71717a;
+  --neutral-50: #a1a1aa;
+  --neutral-40: #d4d4d8;
+  --neutral-30: #e4e4e7;
+  --neutral-20: #f4f4f5;
+  --neutral-10: #fafafa;
+  --neutral-0: #ffffff;
 
   /* Destructive Colors */
-  --destructive-100: #EF4444;
-  --destructive-80: #DC2626;
-  --destructive-60: #B91C1C;
-  --destructive-40: #991B1B;
-  --destructive-20: #7F1D1D;
-  --destructive-10: #450A0A;
+  --destructive-100: #ef4444;
+  --destructive-80: #dc2626;
+  --destructive-60: #b91c1c;
+  --destructive-40: #991b1b;
+  --destructive-20: #7f1d1d;
+  --destructive-10: #450a0a;
 
   /* Accent Colors */
-  --accent-100: #F4F4F5;
-  --accent-foreground: #18181B;
+  --accent-100: #f4f4f5;
+  --accent-foreground: #18181b;
 
   /* Background Colors */
-  --background: #FFFFFF;
-  --foreground: #09090B;
+  --background: #ffffff;
+  --foreground: #09090b;
 
   /* UI Elements */
-  --border: #E4E4E7;
-  --input: #E4E4E7;
-  --ring: #3275F8;  /* Updated to match primary color */
-  --muted: #F4F4F5;
-  --muted-foreground: #71717A;
+  --border: #e4e4e7;
+  --input: #e4e4e7;
+  --ring: #3275f8; /* Updated to match primary color */
+  --muted: #f4f4f5;
+  --muted-foreground: #71717a;
 
   /* Card Colors */
-  --card: #FFFFFF;
-  --card-foreground: #09090B;
+  --card: #ffffff;
+  --card-foreground: #09090b;
 
   /* Popover Colors */
-  --popover: #FFFFFF;
-  --popover-foreground: #09090B;
+  --popover: #ffffff;
+  --popover-foreground: #09090b;
 
   /* Radius */
   --radius: 0.5rem;
-} 
+}
