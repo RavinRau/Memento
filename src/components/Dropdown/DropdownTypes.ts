@@ -12,7 +12,7 @@ export type DropdownItemProps = {
   items?: DropdownItemProps[]
   disabled?: boolean
   className?: string
-  onClick?: () => void
+  onClick?: (id: string) => void
 }
 
 export type DropdownProps = {
@@ -23,4 +23,5 @@ export type DropdownProps = {
   classNameTrigger?: string
   disabled?: boolean
   align?: 'center' | 'start' | 'end'
+  noteId?: string
 }

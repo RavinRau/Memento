@@ -24,6 +24,7 @@ export const Dropdown = ({
   showDescription = false,
   disabled,
   align,
+  noteId,
 }: DropdownProps) => {
   const renderMenuItems = (data?: DropdownItemProps[], parentKey = '') => {
     return data?.map((i, index) => {
@@ -52,7 +53,7 @@ export const Dropdown = ({
           return (
             <DropdownMenuItem
               key={key}
-              onClick={i.onClick}
+              onClick={() => i.onClick?.(noteId || '')}
               className={cn({ block: showDescription }, i.className)}
               disabled={i.disabled}
             >

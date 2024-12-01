@@ -3,6 +3,7 @@ import { observer } from 'mobx-react'
 import Modal from '@/components/Modal/Model'
 import Input from '@/components/Input/Input'
 import TiptapEditor from '@/components/Editor/TiptapEditor'
+import { noteStore } from '@/stores/NoteStore'
 
 type CreateNoteModalProps = {
   open: boolean
@@ -14,7 +15,8 @@ export const CreateNoteModal = observer(({ open, onClose }: CreateNoteModalProps
   const [content, setContent] = useState('')
 
   const handleSave = () => {
-    if (title.trim()) {
+    if (title.trim() && noteStore.activeFolder) {
+      noteStore.addNote(title.trim(), content, noteStore.activeFolder)
       handleClose()
     }
   }
@@ -34,7 +36,7 @@ export const CreateNoteModal = observer(({ open, onClose }: CreateNoteModalProps
       primaryButton={{
         label: 'Save',
         onClick: handleSave,
-        disabled: !title.trim(),
+        disabled: !title.trim() || !noteStore.activeFolder,
       }}
       secondaryButton={{
         label: 'Cancel',

@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { Button } from '@/components/Button/Button'
 import SidebarFileSystem from '@/components/Sidebar/SidebarFileSystem'
 import { FileItem } from '@/components/Sidebar/SidebarTypes'
@@ -6,13 +7,19 @@ import { useState } from 'react'
 import { observer } from 'mobx-react'
 import { CreateFolderModal } from './CreateFolders/CreateFolderModal'
 import { folderStore } from '@/stores/FolderStore'
+import { noteStore } from '@/stores/NoteStore'
 import { NotesList } from './NoteList'
 
 export const NotesApp = observer(() => {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
 
+  useEffect(() => {
+    folderStore.initialize()
+    noteStore.initialize()
+  }, [])
+
   const handleFolderToggle = (folder: FileItem) => {
-    console.log('Folder toggled:', folder.name)
+    noteStore.setActiveFolder(folder.id)
   }
 
   const renderHeader = () => {
