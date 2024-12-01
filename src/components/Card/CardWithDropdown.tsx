@@ -6,6 +6,7 @@ import Dropdown from '../Dropdown/Dropdown'
 import { MoreHorizontalIcon } from 'lucide-react'
 import { DropdownItemProps } from '../Dropdown/DropdownTypes'
 import HoverBorderGradient from '../ui/hover-border-gradient'
+import { useTruncateText } from '@/hooks/useTruncateText'
 
 interface CardWithDropdownProps extends CardProps {
   noteId?: string
@@ -22,6 +23,10 @@ export function CardWithDropdown({
   noteId,
   ...props
 }: CardWithDropdownProps) {
+  const truncatedContent = useTruncateText({
+    text: children,
+    limit: 350,
+  })
   return (
     <div>
       <HoverBorderGradient containerClassName="w-full h-full" className={className}>
@@ -39,7 +44,9 @@ export function CardWithDropdown({
               />
             </CardHeader>
           )}
-          <CardContent className={cn('text-label', classNameChildren)}>{children}</CardContent>
+          <CardContent className={cn('text-label', classNameChildren)}>
+            {truncatedContent}
+          </CardContent>
         </CardUI>
       </HoverBorderGradient>
     </div>

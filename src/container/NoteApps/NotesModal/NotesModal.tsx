@@ -5,6 +5,7 @@ import Input from '@/components/Input/Input'
 import TiptapEditor from '@/components/Editor/TiptapEditor'
 import { noteStore } from '@/stores/NoteStore'
 import { NoteModalProps } from './NotesModalTypes'
+import { folderStore } from '@/stores/FolderStore'
 
 export const NotesModal = observer(({ open, onClose, editNoteId }: NoteModalProps) => {
   const [title, setTitle] = useState('')
@@ -21,11 +22,11 @@ export const NotesModal = observer(({ open, onClose, editNoteId }: NoteModalProp
   }, [editNoteId])
 
   const handleSave = () => {
-    if (title.trim() && noteStore.activeFolder) {
+    if (title.trim() && folderStore.activeFolder) {
       if (editNoteId) {
         noteStore.editNote(editNoteId, title.trim(), content)
       } else {
-        noteStore.addNote(title.trim(), content, noteStore.activeFolder)
+        noteStore.addNote(title.trim(), content, folderStore.activeFolder)
       }
       handleClose()
     }
@@ -46,7 +47,7 @@ export const NotesModal = observer(({ open, onClose, editNoteId }: NoteModalProp
       primaryButton={{
         label: editNoteId ? 'Save Changes' : 'Save',
         onClick: handleSave,
-        disabled: !title.trim() || (!editNoteId && !noteStore.activeFolder),
+        disabled: !title.trim() || (!editNoteId && !folderStore.activeFolder),
       }}
       secondaryButton={{
         label: 'Cancel',

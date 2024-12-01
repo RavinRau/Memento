@@ -56,7 +56,7 @@ const TiptapEditor = ({
     content,
     editorProps: {
       attributes: {
-        class: 'prose prose-base max-w-none focus:outline-none h-[500px] overflow-y-auto p-4',
+        class: 'prose prose-base max-w-none focus:outline-none h-[40vh] overflow-y-auto p-4',
       },
     },
     onUpdate: ({ editor }) => {
@@ -77,5 +77,4 @@ const TiptapEditor = ({
     </div>
   )
 }
-
 export default TiptapEditor
