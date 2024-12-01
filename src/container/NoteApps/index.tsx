@@ -9,7 +9,7 @@ import { CreateFolderModal } from './FoldersModal/FolderModal'
 import { folderStore } from '@/stores/FolderStore'
 import { noteStore } from '@/stores/NoteStore'
 import { NotesList } from './NoteList'
-import { WelcomeScreen } from './WelcomeScreen'
+import { WelcomeFolderScreen } from './WelcomeScreens/FolderScreen'
 
 export const NotesApp = observer(() => {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
@@ -54,7 +54,7 @@ export const NotesApp = observer(() => {
         onFolderToggle={handleFolderToggle}
       />
       {folderStore.getFolders.length === 0 ? (
-        <WelcomeScreen onClick={() => setIsCreateModalOpen(true)} />
+        <WelcomeFolderScreen onClick={() => setIsCreateModalOpen(true)} />
       ) : (
         <NotesList />
       )}

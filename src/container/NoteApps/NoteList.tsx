@@ -6,6 +6,7 @@ import { useState } from 'react'
 import { NotesModal } from './NotesModal/NotesModal'
 import { noteStore } from '@/stores/NoteStore'
 import { Pencil, Trash2 } from 'lucide-react'
+import { WelcomeNoteScreen } from './WelcomeScreens/NoteScreen'
 
 export const NotesList = observer(() => {
   const [isCreateNoteModalOpen, setIsCreateNoteModalOpen] = useState(false)
@@ -36,8 +37,8 @@ export const NotesList = observer(() => {
     },
   ]
 
-  return (
-    <div className="py-8 px-4">
+  const renderNotes = () => (
+    <>
       <div className="flex justify-end items-center">
         <Button onClick={() => setIsCreateNoteModalOpen(true)} disabled={!noteStore.activeFolder}>
           Add Note
@@ -55,6 +56,16 @@ export const NotesList = observer(() => {
           </CardWithDropdown>
         ))}
       </div>
+    </>
+  )
+
+  return (
+    <div className="py-8 px-4 h-full">
+      {noteStore.activeNotes.length === 0 ? (
+        <WelcomeNoteScreen onClick={() => setIsCreateNoteModalOpen(true)} />
+      ) : (
+        renderNotes()
+      )}
       <NotesModal
         open={isCreateNoteModalOpen}
         onClose={handleCloseModal}

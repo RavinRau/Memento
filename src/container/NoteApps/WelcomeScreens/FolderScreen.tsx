@@ -2,7 +2,7 @@ import { Button } from '@/components/Button/Button'
 import { observer } from 'mobx-react'
 import { motion } from 'framer-motion'
 
-export const WelcomeScreen = observer(({ onClick }: { onClick: () => void }) => {
+export const WelcomeFolderScreen = observer(({ onClick }: { onClick: () => void }) => {
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -19,7 +19,7 @@ export const WelcomeScreen = observer(({ onClick }: { onClick: () => void }) => 
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.5,
+        duration: 1,
         ease: 'easeOut',
       },
     },
@@ -31,14 +31,22 @@ export const WelcomeScreen = observer(({ onClick }: { onClick: () => void }) => 
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.5,
+        duration: 1,
         ease: 'easeOut',
       },
     },
+  }
+
+  const borderVariants = {
+    initial: {
+      opacity: 0.5,
+      scale: 1,
+    },
     pulse: {
+      opacity: [0.5, 1, 0.5],
       scale: [1, 1.05, 1],
       transition: {
-        duration: 1.5,
+        duration: 2,
         repeat: Infinity,
         ease: 'easeInOut',
       },
@@ -52,15 +60,22 @@ export const WelcomeScreen = observer(({ onClick }: { onClick: () => void }) => 
       initial="hidden"
       animate="visible"
     >
-      <motion.div className="text-2xl font-semibold text-neutral-100" variants={itemVariants}>
+      <motion.div className="text-h1" variants={itemVariants}>
         Hi Welcome To Memento,
       </motion.div>
-      <motion.div className="text-lg text-neutral-80 mt-2" variants={itemVariants}>
-        Lets start with creating a folder
+      <motion.div className="text-description text-lg" variants={itemVariants}>
+        Lets start your note taking journey with a folder
       </motion.div>
-      <motion.div variants={buttonVariants} animate={['visible', 'pulse']} className="mt-4">
-        <Button size="lg" onClick={onClick} className="px-6">
-          Create your first Folder
+      <motion.div variants={buttonVariants} className="mt-4 relative">
+        <motion.div
+          className="absolute inset-0 rounded-lg bg-primary-60"
+          variants={borderVariants}
+          initial="initial"
+          animate="pulse"
+          style={{ filter: 'blur(2px)' }}
+        />
+        <Button size="lg" onClick={onClick} className="px-6 relative">
+          Create your first folder
         </Button>
       </motion.div>
     </motion.div>
