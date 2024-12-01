@@ -6,6 +6,7 @@ import { useState } from 'react'
 import { observer } from 'mobx-react'
 import { CreateFolderModal } from './CreateFolders/CreateFolderModal'
 import { folderStore } from '@/stores/FolderStore'
+import { NotesList } from './NoteList'
 
 export const NotesApp = observer(() => {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
@@ -37,12 +38,13 @@ export const NotesApp = observer(() => {
   }
 
   return (
-    <div>
+    <div className="pl-[280px]">
       <SidebarFileSystem
         header={renderHeader()}
         items={folderStore.getFolders}
         onFolderToggle={handleFolderToggle}
       />
+      <NotesList />
       <CreateFolderModal open={isCreateModalOpen} onClose={() => setIsCreateModalOpen(false)} />
     </div>
   )

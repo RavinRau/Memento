@@ -15,7 +15,6 @@ interface CardWithDropdownProps extends CardProps {
 export function CardWithDropdown({
   className,
   title,
-  description,
   classNameChildren,
   children,
   dropdownItems,
@@ -29,7 +28,7 @@ export function CardWithDropdown({
   return (
     <HoverBorderGradient containerClassName="w-full h-full" className={className}>
       <CardUI className={cn('w-full h-full bg-background border rounded-lg', className)} {...props}>
-        {(title || description) && (
+        {title && (
           <CardHeader className="flex flex-row items-center justify-between">
             <CardTitle>{title}</CardTitle>
             <Dropdown label={<MoreHorizontalIcon className="h-5 w-5" />} data={dropdownItems} />
