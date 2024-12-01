@@ -1,4 +1,3 @@
-'use client'
 import * as React from 'react'
 import { CardUI, CardContent, CardHeader, CardTitle } from '../ui/card'
 import { CardProps } from './CardTypes'

@@ -1,4 +1,4 @@
-import NotesApp from '@/container/NoteApps'
+import { NotesApp } from '@/container/NoteApps'
 
 export default function Home() {
   return <NotesApp />

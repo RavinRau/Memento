@@ -16,6 +16,5 @@ export type FileItem = {
 
 export type SidebarFileSystemProps = SidebarProps & {
   items: FileItem[]
-  activeItemId?: string
   onFolderToggle?: (folder: FileItem) => void
 }

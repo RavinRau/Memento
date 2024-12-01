@@ -2,14 +2,13 @@ import { Button } from '@/components/Button/Button'
 import SidebarFileSystem from '@/components/Sidebar/SidebarFileSystem'
 import { FileItem } from '@/components/Sidebar/SidebarTypes'
 import { Notebook, Plus } from 'lucide-react'
+import { useState } from 'react'
+import { observer } from 'mobx-react'
+import { CreateFolderModal } from './CreateFolders/CreateFolderModal'
+import { folderStore } from '@/stores/FolderStore'
 
-const NotesApp = () => {
-  const fileSystemItems = [
-    { id: '1', name: 'Documents' },
-    { id: '2', name: 'Images' },
-    { id: '3', name: 'Projects' },
-    { id: '4', name: 'Notes' },
-  ]
+export const NotesApp = observer(() => {
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
 
   const handleFolderToggle = (folder: FileItem) => {
     console.log('Folder toggled:', folder.name)
@@ -23,7 +22,12 @@ const NotesApp = () => {
             <Notebook className="h-6 w-6 text-neutral-60" />
             <span className="text-h3">Memento</span>
           </div>
-          <Button className="rounded-full" variant="ghost" size="icon">
+          <Button
+            className="rounded-full"
+            variant="ghost"
+            size="icon"
+            onClick={() => setIsCreateModalOpen(true)}
+          >
             <Plus className="h-4 w-4" />
           </Button>
         </div>
@@ -36,11 +40,10 @@ const NotesApp = () => {
     <div>
       <SidebarFileSystem
         header={renderHeader()}
-        items={fileSystemItems}
+        items={folderStore.getFolders}
         onFolderToggle={handleFolderToggle}
       />
+      <CreateFolderModal open={isCreateModalOpen} onClose={() => setIsCreateModalOpen(false)} />
     </div>
   )
-}
-
-export default NotesApp
+})

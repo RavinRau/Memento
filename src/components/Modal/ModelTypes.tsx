@@ -2,7 +2,7 @@ import { ReactNode } from 'react'
 
 export type ModalTypes = {
   title: string
-  description: string
+  description?: string
   open: boolean
   onOpen: (open: boolean) => void
   children: ReactNode

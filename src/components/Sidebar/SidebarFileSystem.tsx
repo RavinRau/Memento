@@ -1,50 +1,18 @@
-'use client'
-
 import { cn } from '@/lib/utils'
-import { FileItem, SidebarFileSystemProps } from './SidebarTypes'
+import { SidebarFileSystemProps } from './SidebarTypes'
 import Sidebar from './Sidebar'
 import { Folder, FolderOpen } from 'lucide-react'
-import { useState, useEffect } from 'react'
 
-const SidebarFileSystem = ({
-  items: initialItems,
-  onFolderToggle,
-  activeItemId,
-  header,
-  ...props
-}: SidebarFileSystemProps) => {
-  const [items, setItems] = useState<FileItem[]>(initialItems)
-
-  // Update items when activeItemId changes
-  useEffect(() => {
-    setItems((currentItems) =>
-      currentItems.map((item) => ({
-        ...item,
-        isActive: item.id === activeItemId,
-      }))
-    )
-  }, [activeItemId])
-
-  const handleItemClick = (clickedItem: FileItem) => {
-    setItems((currentItems) =>
-      currentItems.map((item) => ({
-        ...item,
-        // Close all other folders when opening a new one
-        isOpen: item.id === clickedItem.id ? !item.isOpen : false,
-      }))
-    )
-    onFolderToggle?.(clickedItem)
-  }
-
+const SidebarFileSystem = ({ items, onFolderToggle, header, ...props }: SidebarFileSystemProps) => {
   return (
     <Sidebar header={header} {...props}>
       <div className="flex flex-col gap-1">
         {items.map((item) => (
           <div
             key={item.id}
-            onClick={() => handleItemClick(item)}
+            onClick={() => onFolderToggle?.(item)}
             className={cn(
-              'flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-neutral-80 transition-colors w-full text-left',
+              'flex items-center gap-2 rounded-lg p-2 text-sm cursor-pointer text-neutral-80 transition-colors w-full text-left',
               'hover:bg-primary-10 hover:text-neutral-100',
               { 'bg-primary-80 text-neutral-0': item.isActive }
             )}
