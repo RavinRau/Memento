@@ -8,6 +8,7 @@ import { noteStore } from '@/stores/NoteStore'
 import { folderStore } from '@/stores/FolderStore'
 import { Pencil, Trash2, FolderInput } from 'lucide-react'
 import { WelcomeNoteScreen } from './WelcomeScreens/NoteScreen'
+import { stripHtmlTags } from '@/utils/formatContent'
 
 export const NotesList = observer(() => {
   const [isCreateNoteModalOpen, setIsCreateNoteModalOpen] = useState(false)
@@ -59,7 +60,7 @@ export const NotesList = observer(() => {
             dropdownItems={cardDropdownItems}
             noteId={note.id}
           >
-            {note.content}
+            {stripHtmlTags(note.content)}
           </CardWithDropdown>
         ))}
       </div>

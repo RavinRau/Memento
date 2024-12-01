@@ -10,6 +10,7 @@ import HoverBorderGradient from '../ui/hover-border-gradient'
 interface CardWithDropdownProps extends CardProps {
   noteId?: string
   dropdownItems: DropdownItemProps[]
+  children: string
 }
 
 export function CardWithDropdown({
@@ -38,7 +39,7 @@ export function CardWithDropdown({
               />
             </CardHeader>
           )}
-          <CardContent className={classNameChildren}>{children}</CardContent>
+          <CardContent className={cn('text-label', classNameChildren)}>{children}</CardContent>
         </CardUI>
       </HoverBorderGradient>
     </div>
