@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-type DropdownItemType = 'label' | 'separator' | 'item' | 'group' | 'submenu'
+export type DropdownItemType = 'label' | 'separator' | 'item' | 'group' | 'submenu'
 
 export type DropdownItemProps = {
   type: DropdownItemType

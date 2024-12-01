@@ -1,15 +1,17 @@
 import { ButtonUI } from '../ui/button'
 import { ButtonProps } from './ButtonTypes'
 
-export function Button({
+export const Button = ({
   children,
   size = 'sm',
-  variant = 'secondary',
+  variant = 'default',
   ...otherProps
-}: ButtonProps) {
+}: ButtonProps) => {
   return (
     <ButtonUI size={size} variant={variant} {...otherProps}>
       {children}
     </ButtonUI>
   )
 }
+
+export default Button

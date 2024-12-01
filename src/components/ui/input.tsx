@@ -19,4 +19,4 @@ const InputUI = React.forwardRef<HTMLInputElement, React.ComponentProps<'input'>
 )
 InputUI.displayName = 'Input'
 
-export { InputUI as Input }
+export { InputUI }

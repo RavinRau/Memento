@@ -10,14 +10,14 @@ type HoverBorderGradientProps = {
   children: React.ReactNode
 } & React.HTMLAttributes<HTMLElement>
 
-export function HoverBorderGradient({
+const HoverBorderGradient = ({
   children,
   containerClassName,
   className,
   as: Tag = 'div',
   duration = 3,
   ...props
-}: HoverBorderGradientProps) {
+}: HoverBorderGradientProps) => {
   const [hovered, setHovered] = useState<boolean>(false)
 
   return (
@@ -70,7 +70,9 @@ export function HoverBorderGradient({
           },
         }}
       />
-      <div className={cn('relative z-10', className)}>{children}</div>
+      <div className={cn('relative', className)}>{children}</div>
     </Tag>
   )
 }
+
+export default HoverBorderGradient

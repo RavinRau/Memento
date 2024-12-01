@@ -17,6 +17,7 @@ import { toast } from 'sonner'
 import CardWithDropdown from '@/components/Card/CardWithDropdown'
 import TiptapEditor from '@/components/Editor/TiptapEditor'
 import { useState } from 'react'
+import Modal from '@/components/Modal/Model'
 
 type ButtonVariant = 'default' | 'destructive' | 'outline' | 'secondary' | 'link' | 'ghost'
 
@@ -33,9 +34,15 @@ type CardContent = {
 
 const ComponentDisplay = () => {
   const [content, setContent] = useState('')
+  const [modalOpen, setModalOpen] = useState(false)
 
   const handleChange = (newContent: string) => {
     setContent(newContent)
+  }
+
+  const handleSave = () => {
+    console.log('Saving content:', content)
+    setModalOpen(false)
   }
 
   const buttonContent: ButtonContent[] = [
@@ -193,7 +200,7 @@ const ComponentDisplay = () => {
       {/* Card Section */}
       <section className="space-y-2">
         <h2 className="text-h2">Cards</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="flex items-stretch">
           {cardContent.map((card, index) => (
             <Card key={`card-${index}`} title={card.title}>
               {card.contentText}
@@ -205,7 +212,7 @@ const ComponentDisplay = () => {
       {/* Card With Dropdown Section */}
       <section className="space-y-2">
         <h2 className="text-h2">Cards with Dropdown</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="flex items-stretch">
           {cardContent.map((card, index) => (
             <CardWithDropdown
               key={`card-dropdown-${index}`}
@@ -233,6 +240,31 @@ const ComponentDisplay = () => {
           onChange={handleChange}
           placeholder="Write your note here..."
         />
+      </section>
+
+      <section>
+        <h2 className="text-h2">Modal</h2>
+        <Button onClick={() => setModalOpen(true)}>Open Modal</Button>
+        <Modal 
+          open={modalOpen} 
+          onOpen={(open) => setModalOpen(open)} 
+          title='Add Notes' 
+          description='Use the editor below to write your notes'
+          primaryButton={{
+            label: 'Save',
+            onClick: handleSave,
+          }}
+          secondaryButton={{
+            label: 'Cancel',
+            onClick: () => setModalOpen(false),
+          }}
+        >
+          <TiptapEditor
+            content={content}
+            onChange={handleChange}
+            placeholder="Write your note here..."
+          />
+        </Modal>
       </section>
     </div>
   )
