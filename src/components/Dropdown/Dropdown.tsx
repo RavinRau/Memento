@@ -13,7 +13,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu'
-import { cn, isNil, isString } from '@/lib/utils'
+import { cn, isString } from '@/lib/utils'
 import { DropdownItemProps, DropdownProps } from './DropdownTypes'
 
 export const Dropdown = ({
@@ -26,6 +26,13 @@ export const Dropdown = ({
   align,
   noteId,
 }: DropdownProps) => {
+  const resolveItems = (items: DropdownItemProps[] | ((id: string) => DropdownItemProps[]) | undefined, id?: string) => {
+    if (typeof items === 'function' && id) {
+      return items(id)
+    }
+    return items || []
+  }
+
   const renderMenuItems = (data?: DropdownItemProps[], parentKey = '') => {
     return data?.map((i, index) => {
       const itemKey = isString(i.text) ? i.text : (i.key ?? index)
@@ -61,12 +68,14 @@ export const Dropdown = ({
             </DropdownMenuItem>
           )
         case 'group':
+          const groupItems = resolveItems(i.items, noteId)
           return (
             <DropdownMenuGroup key={`group-${key}`}>
-              {renderMenuItems(isNil(i.items) ? [] : i.items, `group-${key}-`)}
+              {renderMenuItems(groupItems as DropdownItemProps[], `group-${key}-`)}
             </DropdownMenuGroup>
           )
         case 'submenu':
+          const submenuItems = resolveItems(i.items, noteId)
           return (
             <DropdownMenuSub key={`submenu-${key}`}>
               <DropdownMenuSubTrigger disabled={i.disabled}>
@@ -74,7 +83,7 @@ export const Dropdown = ({
               </DropdownMenuSubTrigger>
               <DropdownMenuPortal>
                 <DropdownMenuSubContent className={i.className}>
-                  {renderMenuItems(isNil(i.items) ? [] : i.items, `submenu-${key}-`)}
+                  {renderMenuItems(submenuItems as DropdownItemProps[], `submenu-${key}-`)}
                 </DropdownMenuSubContent>
               </DropdownMenuPortal>
             </DropdownMenuSub>

@@ -9,7 +9,7 @@ export type DropdownItemProps = {
   description?: string | ReactNode
   key?: string
   shortcut?: ReactNode
-  items?: DropdownItemProps[]
+  items?: DropdownItemProps[] | ((id: string) => DropdownItemProps[])
   disabled?: boolean
   className?: string
   onClick?: (id: string) => void

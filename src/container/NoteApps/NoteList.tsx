@@ -5,7 +5,8 @@ import { observer } from 'mobx-react'
 import { useState } from 'react'
 import { NotesModal } from './NotesModal/NotesModal'
 import { noteStore } from '@/stores/NoteStore'
-import { Pencil, Trash2 } from 'lucide-react'
+import { folderStore } from '@/stores/FolderStore'
+import { Pencil, Trash2, FolderInput } from 'lucide-react'
 import { WelcomeNoteScreen } from './WelcomeScreens/NoteScreen'
 
 export const NotesList = observer(() => {
@@ -25,13 +26,19 @@ export const NotesList = observer(() => {
   const cardDropdownItems: DropdownItemProps[] = [
     {
       type: 'item',
-      icon: <Pencil />,
+      icon: <Pencil className="h-4 w-4" />,
       text: 'Edit',
       onClick: (noteId: string) => handleEdit(noteId),
     },
     {
+      type: 'submenu',
+      icon: <FolderInput className="h-4 w-4" />,
+      text: 'Move to folder',
+      items: (noteId: string) => folderStore.getFolderSubmenuItems(noteId),
+    },
+    {
       type: 'item',
-      icon: <Trash2 />,
+      icon: <Trash2 className="h-4 w-4" />,
       text: 'Delete',
       onClick: (noteId: string) => noteStore.deleteNote(noteId),
     },

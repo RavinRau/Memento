@@ -1,5 +1,7 @@
 import { makeAutoObservable } from 'mobx'
 import { FileItem } from '@/components/Sidebar/SidebarTypes'
+import { DropdownItemProps } from '@/components/Dropdown/DropdownTypes'
+import { noteStore } from './NoteStore'
 
 class FolderStore {
   folders: FileItem[] = []
@@ -55,6 +57,20 @@ class FolderStore {
 
   get getFolders() {
     return this.folders
+  }
+
+  getFolderSubmenuItems = (noteId: string): DropdownItemProps[] => {
+    const handleMoveNote = (noteId: string, targetFolderId: string) => {
+        noteStore.moveNote(noteId, targetFolderId)
+      }
+
+    return folderStore.folders
+      .filter(folder => folder.id !== folderStore.activeFolder)
+      .map(folder => ({
+        type: 'item' as const,
+        text: folder.name,
+        onClick: () => handleMoveNote(noteId, folder.id)
+      }))
   }
 }
 

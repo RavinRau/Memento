@@ -65,6 +65,18 @@ class NoteStore {
       .filter((note) => note.folderId === this.activeFolder)
       .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())
   }
+
+  moveNote = (noteId: string, targetFolderId: string) => {
+    const noteIndex = this.notes.findIndex(note => note.id === noteId)
+    if (noteIndex !== -1) {
+      this.notes[noteIndex] = {
+        ...this.notes[noteIndex],
+        folderId: targetFolderId,
+        updatedAt: new Date().toISOString(),
+      }
+      this.saveNotes()
+    }
+  }
 }
 
 export const noteStore = new NoteStore() 
