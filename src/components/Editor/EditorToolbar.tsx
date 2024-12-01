@@ -1,4 +1,3 @@
-import { Editor } from '@tiptap/react'
 import {
   Bold,
   Italic,

@@ -9,3 +9,8 @@ export type CardProps = BaseCardProps & {
   footer?: ReactNode
   classNameChildren?: string
 }
+
+export type CardContent = {
+  title: string
+  contentText: string
+}

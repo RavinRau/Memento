@@ -30,13 +30,13 @@ const buttonVariants = cva(
   }
 )
 
-export interface ButtonProps
+export interface ButtonUIProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean
 }
 
-const ButtonUI = React.forwardRef<HTMLButtonElement, ButtonProps>(
+const ButtonUI = React.forwardRef<HTMLButtonElement, ButtonUIProps>(
   ({ className, variant, size, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : 'button'
     return (

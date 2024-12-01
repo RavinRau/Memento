@@ -1,3 +1,3 @@
-import { ButtonUiProps } from '../ui/button'
+import { ButtonUIProps } from '../ui/button'
 
-export type ButtonProps = ButtonUiProps
+export type ButtonProps = ButtonUIProps

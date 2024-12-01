@@ -1,13 +1,15 @@
 import Button from '@/components/Button/Button'
+import { DropdownItemProps } from '@/components/Dropdown/DropdownTypes'
 import CardWithDropdown from '@/components/Card/CardWithDropdown'
 import { observer } from 'mobx-react'
 import { useState } from 'react'
 import { CreateNoteModal } from './CreateNotes/CreateNotes'
+import { CardContent } from '@/components/Card/CardTypes'
 
 export const NotesList = observer(() => {
     const [isCreateNoteModalOpen, setIsCreateNoteModalOpen] = useState(false)
 
-  const cardContent: any[] = [
+  const cardContent: CardContent[] = [
     {
       title: 'Getting Started',
       contentText:
@@ -40,7 +42,7 @@ export const NotesList = observer(() => {
     },
   ]
 
-  const cardDropdownItems: any[] = [
+  const cardDropdownItems: DropdownItemProps[] = [
     { type: 'item', text: 'Edit', onClick: () => console.log('Edit clicked') },
     { type: 'item', text: 'Delete', onClick: () => console.log('Delete clicked') }
   ]
