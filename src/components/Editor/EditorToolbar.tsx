@@ -24,8 +24,8 @@ const ToolbarButton: React.FC<ToolbarButtonProps> = ({
     onClick={onClick}
     disabled={disabled}
     title={tooltip}
-    className={`p-2 rounded hover:bg-gray-100 transition-colors duration-100 ${
-      active ? 'bg-gray-200 text-gray-900' : 'text-gray-700'
+    className={`p-2 rounded hover:bg-neutral-30 transition-colors duration-100 ${
+      active ? 'bg-primary-60 text-neutral-0' : 'text-neutral-90'
     } ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
   >
     {children}

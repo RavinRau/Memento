@@ -14,10 +14,13 @@ const SidebarFileSystem = ({ items, onFolderToggle, header, ...props }: SidebarF
             className={cn(
               'flex items-center gap-2 rounded-lg p-2 text-sm cursor-pointer text-neutral-80 transition-colors w-full text-left',
               'hover:bg-primary-10 hover:text-neutral-100',
-              { 'bg-primary-80 text-neutral-0': item.isActive }
+              {
+                'bg-primary-100 text-neutral-0 hover:bg-primary-80 hover:text-neutral-0':
+                  item.isActive,
+              }
             )}
           >
-            {item.isOpen ? (
+            {item.isActive ? (
               <FolderOpen className="h-4 w-4 shrink-0" />
             ) : (
               <Folder className="h-4 w-4 shrink-0" />

@@ -23,7 +23,7 @@ const TiptapEditor = ({
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
-        heading: false, // disable to use our own configuration
+        heading: false,
         bulletList: false,
         orderedList: false,
         listItem: false,
@@ -36,7 +36,7 @@ const TiptapEditor = ({
         emptyNodeClass: 'is-empty',
       }),
       Heading.configure({
-        levels: [1, 2], // Only allow h1 and h2
+        levels: [1, 2],
       }),
       BulletList.configure({
         keepMarks: true,
@@ -56,7 +56,7 @@ const TiptapEditor = ({
     content,
     editorProps: {
       attributes: {
-        class: 'prose prose-base max-w-none focus:outline-none min-h-[200px] p-4',
+        class: 'prose prose-base max-w-none focus:outline-none h-[500px] overflow-y-auto p-4',
       },
     },
     onUpdate: ({ editor }) => {

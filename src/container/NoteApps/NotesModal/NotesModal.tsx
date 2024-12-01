@@ -42,7 +42,7 @@ export const NotesModal = observer(({ open, onClose, editNoteId }: NoteModalProp
       open={open}
       onOpen={onClose}
       title={editNoteId ? "Edit Note" : "Create A New Note"}
-      description={editNoteId ? "Update your note" : "Capture your thoughts, ideas, and inspirations"}
+      description={editNoteId ? "Revise and refine your captured thoughts" : "Capture your thoughts, ideas, and inspirations"}
       primaryButton={{
         label: editNoteId ? 'Save Changes' : 'Save',
         onClick: handleSave,
@@ -62,14 +62,12 @@ export const NotesModal = observer(({ open, onClose, editNoteId }: NoteModalProp
           autoFocus
         />
         <div>
-          <label className="text-sm font-medium mb-2 block">Content</label>
-          <div className="min-h-[200px] border rounded-lg">
-            <TiptapEditor
+          <label className="text-label">Content</label>
+          <TiptapEditor
               content={content}
               onChange={setContent}
               placeholder="Start writing your note..."
             />
-          </div>
         </div>
       </div>
     </Modal>

@@ -5,7 +5,7 @@ import { InputProps } from './InputTypes'
 const Input = ({ label, placeholder, value, onChange, className, ...props }: InputProps) => {
   return (
     <div className="flex flex-col gap-1.5">
-      {label && <label className="text-label text-neutral-80">{label}</label>}
+      {label && <label className="text-label">{label}</label>}
       <InputUI
         placeholder={placeholder}
         value={value}

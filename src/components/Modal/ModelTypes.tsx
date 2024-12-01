@@ -6,6 +6,7 @@ export type ModalTypes = {
   open: boolean
   onOpen: (open: boolean) => void
   children: ReactNode
+  className?: string;
   footer?: ReactNode
   primaryButton?: {
     label: string

@@ -40,6 +40,7 @@ export const CreateFolderModal = observer(({ open, onClose }: CreateFolderModalP
         label: 'Cancel',
         onClick: handleClose,
       }}
+      className="max-w-[30vw]"
     >
       <Input
         label="Name"

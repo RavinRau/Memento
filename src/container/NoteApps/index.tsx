@@ -5,7 +5,7 @@ import { FileItem } from '@/components/Sidebar/SidebarTypes'
 import { Notebook, Plus } from 'lucide-react'
 import { useState } from 'react'
 import { observer } from 'mobx-react'
-import { CreateFolderModal } from './CreateFolders/CreateFolderModal'
+import { CreateFolderModal } from './FoldersModal/FolderModal'
 import { folderStore } from '@/stores/FolderStore'
 import { noteStore } from '@/stores/NoteStore'
 import { NotesList } from './NoteList'
@@ -19,6 +19,7 @@ export const NotesApp = observer(() => {
   }, [])
 
   const handleFolderToggle = (folder: FileItem) => {
+    folderStore.setActiveFolder(folder.id)
     noteStore.setActiveFolder(folder.id)
   }
 
@@ -45,7 +46,7 @@ export const NotesApp = observer(() => {
   }
 
   return (
-    <div className="pl-[280px]">
+    <div className="pl-[280px] bg-neutral-10 ">
       <SidebarFileSystem
         header={renderHeader()}
         items={folderStore.getFolders}
