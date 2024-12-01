@@ -2,7 +2,6 @@ import { Button } from '@/components/Button/Button'
 import Card from '@/components/Card/Card'
 import Dropdown from '@/components/Dropdown/Dropdown'
 import { DropdownItemProps } from '@/components/Dropdown/DropdownTypes'
-import { HoverBorderGradient } from '@/components/ui/hover-border-gradient'
 import {
   CreditCard,
   Keyboard,
@@ -12,12 +11,15 @@ import {
   Settings,
   User,
   UserPlus,
+  FileText,
 } from 'lucide-react'
 import { toast } from 'sonner'
 import CardWithDropdown from '@/components/Card/CardWithDropdown'
 import TiptapEditor from '@/components/Editor/TiptapEditor'
 import { useState } from 'react'
 import Modal from '@/components/Modal/Model'
+import SidebarFileSystem from '@/components/Sidebar/SidebarFileSystem'
+import { FileItem } from '@/components/Sidebar/SidebarTypes'
 
 type ButtonVariant = 'default' | 'destructive' | 'outline' | 'secondary' | 'link' | 'ghost'
 
@@ -165,107 +167,125 @@ const ComponentDisplay = () => {
     { type: 'item', text: 'Share', onClick: () => console.log('Share clicked') },
   ]
 
+  const fileSystemItems = [
+    { id: '1', name: 'Documents' },
+    { id: '2', name: 'Images' },
+    { id: '3', name: 'Projects' },
+    { id: '4', name: 'Notes' },
+  ]
+
+  const handleFolderToggle = (folder: FileItem) => {
+    console.log('Folder toggled:', folder.name)
+  }
+
   return (
-    <div className="p-8 space-y-12">
-      {/* Typography Section */}
-      <section className="space-y-2">
-        <h1 className="text-h2">Typography</h1>
-        <div className="space-y-4">
-          <h1 className="text-h1">Heading 1</h1>
-          <h2 className="text-h2">Heading 2</h2>
-          <h3 className="text-h3">Heading 3</h3>
-          <p className="text-body">Regular body text</p>
-          <p className="text-small">Small text</p>
-        </div>
-      </section>
+    <div className="pl-[280px]">
+      <SidebarFileSystem
+        header={
+          <div className="flex items-center gap-2">
+            <FileText className="h-6 w-6" />
+            <h1 className="text-xl font-bold">Files</h1>
+          </div>
+        }
+        items={fileSystemItems}
+        onFolderToggle={handleFolderToggle}
+      />
+      {/* Main Content */}
+      <div className="p-8 space-y-12">
+        {/* Typography Section */}
+        <section className="space-y-2">
+          <h1 className="text-h2">Typography</h1>
+          <div className="space-y-4">
+            <h1 className="text-h1">Heading 1</h1>
+            <h2 className="text-h2">Heading 2</h2>
+            <h3 className="text-h3">Heading 3</h3>
+            <p className="text-body">Regular body text</p>
+            <p className="text-label">Label text</p>
+            <p className="text-description">Description text</p>
+          </div>
+        </section>
 
-      {/* <HoverBorderGradient
-            containerClassName="w-full"
-            ><
-                div className='w-[350px] h-[350px]'/>
-                </HoverBorderGradient> */}
+        <section className="space-y-2">
+          <h2 className="text-h2">Buttons</h2>
+          <div className="flex flex-wrap gap-4">
+            {buttonContent.map((button, index) => (
+              <Button key={`button-${index}`} variant={button.variant} onClick={button.onClick}>
+                {button.title}
+              </Button>
+            ))}
+          </div>
+        </section>
 
-      {/* Button Section */}
-      <section className="space-y-2">
-        <h2 className="text-h2">Buttons</h2>
-        <div className="flex flex-wrap gap-4">
-          {buttonContent.map((button, index) => (
-            <Button key={`button-${index}`} variant={button.variant} onClick={button.onClick}>
-              {button.title}
-            </Button>
-          ))}
-        </div>
-      </section>
+        {/* Card Section */}
+        <section className="space-y-2">
+          <h2 className="text-h2">Cards</h2>
+          <div className="flex items-stretch">
+            {cardContent.map((card, index) => (
+              <Card key={`card-${index}`} title={card.title}>
+                {card.contentText}
+              </Card>
+            ))}
+          </div>
+        </section>
 
-      {/* Card Section */}
-      <section className="space-y-2">
-        <h2 className="text-h2">Cards</h2>
-        <div className="flex items-stretch">
-          {cardContent.map((card, index) => (
-            <Card key={`card-${index}`} title={card.title}>
-              {card.contentText}
-            </Card>
-          ))}
-        </div>
-      </section>
+        {/* Card With Dropdown Section */}
+        <section className="space-y-2">
+          <h2 className="text-h2">Cards with Dropdown</h2>
+          <div className="flex items-stretch">
+            {cardContent.map((card, index) => (
+              <CardWithDropdown
+                key={`card-dropdown-${index}`}
+                title={card.title}
+                dropdownItems={cardDropdownItems}
+              >
+                {card.contentText}
+              </CardWithDropdown>
+            ))}
+          </div>
+        </section>
 
-      {/* Card With Dropdown Section */}
-      <section className="space-y-2">
-        <h2 className="text-h2">Cards with Dropdown</h2>
-        <div className="flex items-stretch">
-          {cardContent.map((card, index) => (
-            <CardWithDropdown
-              key={`card-dropdown-${index}`}
-              title={card.title}
-              dropdownItems={cardDropdownItems}
-            >
-              {card.contentText}
-            </CardWithDropdown>
-          ))}
-        </div>
-      </section>
+        {/* Dropdown Section */}
+        <section className="space-y-2">
+          <h2 className="text-h2">Dropdown</h2>
+          <div>
+            <Dropdown label={<MoreHorizontalIcon />} data={dropdownContent} />
+          </div>
+        </section>
 
-      {/* Dropdown Section */}
-      <section className="space-y-2">
-        <h2 className="text-h2">Dropdown</h2>
-        <div>
-          <Dropdown label={<MoreHorizontalIcon />} data={dropdownContent} />
-        </div>
-      </section>
-
-      <section>
-        <h2 className="text-h2">Editor</h2>
-        <TiptapEditor
-          content={content}
-          onChange={handleChange}
-          placeholder="Write your note here..."
-        />
-      </section>
-
-      <section>
-        <h2 className="text-h2">Modal</h2>
-        <Button onClick={() => setModalOpen(true)}>Open Modal</Button>
-        <Modal 
-          open={modalOpen} 
-          onOpen={(open) => setModalOpen(open)} 
-          title='Add Notes' 
-          description='Use the editor below to write your notes'
-          primaryButton={{
-            label: 'Save',
-            onClick: handleSave,
-          }}
-          secondaryButton={{
-            label: 'Cancel',
-            onClick: () => setModalOpen(false),
-          }}
-        >
+        <section>
+          <h2 className="text-h2">Editor</h2>
           <TiptapEditor
             content={content}
             onChange={handleChange}
             placeholder="Write your note here..."
           />
-        </Modal>
-      </section>
+        </section>
+
+        <section>
+          <h2 className="text-h2">Modal</h2>
+          <Button onClick={() => setModalOpen(true)}>Open Modal</Button>
+          <Modal
+            open={modalOpen}
+            onOpen={(open) => setModalOpen(open)}
+            title="Add Notes"
+            description="Use the editor below to write your notes"
+            primaryButton={{
+              label: 'Save',
+              onClick: handleSave,
+            }}
+            secondaryButton={{
+              label: 'Cancel',
+              onClick: () => setModalOpen(false),
+            }}
+          >
+            <TiptapEditor
+              content={content}
+              onChange={handleChange}
+              placeholder="Write your note here..."
+            />
+          </Modal>
+        </section>
+      </div>
     </div>
   )
 }

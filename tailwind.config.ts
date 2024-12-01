@@ -17,6 +17,7 @@ export default {
         h3: 'var(--neutral-90)',
         body: 'var(--neutral-80)',
         label: 'var(--neutral-100)',
+        description: 'var(--neutral-60)',
       },
       fontSize: {
         h1: ['2rem', { fontWeight: '700' }],
@@ -24,6 +25,7 @@ export default {
         h3: ['1.125rem', { fontWeight: '600' }],
         body: ['1rem', { fontWeight: '500' }],
         label: ['0.875rem', { fontWeight: '400' }],
+        description: ['0.750rem', { fontWeight: '400' }],
       },
       colors: {
         background: 'var(--background)',
