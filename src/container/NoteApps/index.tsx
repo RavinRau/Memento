@@ -9,6 +9,7 @@ import { CreateFolderModal } from './FoldersModal/FolderModal'
 import { folderStore } from '@/stores/FolderStore'
 import { noteStore } from '@/stores/NoteStore'
 import { NotesList } from './NoteList'
+import { WelcomeScreen } from './WelcomeScreen'
 
 export const NotesApp = observer(() => {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
@@ -46,13 +47,17 @@ export const NotesApp = observer(() => {
   }
 
   return (
-    <div className="pl-[280px] bg-neutral-10 ">
+    <div className="pl-[280px]" style={{ height: '100vh' }}>
       <SidebarFileSystem
         header={renderHeader()}
         items={folderStore.getFolders}
         onFolderToggle={handleFolderToggle}
       />
-      <NotesList />
+      {folderStore.getFolders.length === 0 ? (
+        <WelcomeScreen onClick={() => setIsCreateModalOpen(true)} />
+      ) : (
+        <NotesList />
+      )}
       <CreateFolderModal open={isCreateModalOpen} onClose={() => setIsCreateModalOpen(false)} />
     </div>
   )
