@@ -3,17 +3,28 @@ import { DropdownItemProps } from '@/components/Dropdown/DropdownTypes'
 import CardWithDropdown from '@/components/Card/CardWithDropdown'
 import { observer } from 'mobx-react'
 import { useState } from 'react'
-import { CreateNoteModal } from './CreateNotes/CreateNotes'
+import { NotesModal } from './NotesModal/NotesModal'
 import { noteStore } from '@/stores/NoteStore'
 
 export const NotesList = observer(() => {
   const [isCreateNoteModalOpen, setIsCreateNoteModalOpen] = useState(false)
+  const [editingNoteId, setEditingNoteId] = useState<string | null>(null)
+
+  const handleEdit = (noteId: string) => {
+    setEditingNoteId(noteId)
+    setIsCreateNoteModalOpen(true)
+  }
+
+  const handleCloseModal = () => {
+    setIsCreateNoteModalOpen(false)
+    setEditingNoteId(null)
+  }
 
   const cardDropdownItems: DropdownItemProps[] = [
     {
       type: 'item',
       text: 'Edit',
-      onClick: (noteId: string) => console.log(noteId),
+      onClick: (noteId: string) => handleEdit(noteId),
     },
     {
       type: 'item',
@@ -29,7 +40,7 @@ export const NotesList = observer(() => {
           Add Note
         </Button>
       </div>
-      <div className="flex flex-wrap py-4 justify-center">
+      <div className="flex flex-wrap py-4">
         {noteStore.activeNotes.map((note) => (
           <div key={note.id} className="w-[32%] m-2">
             <CardWithDropdown title={note.title} dropdownItems={cardDropdownItems} noteId={note.id}>
@@ -38,9 +49,10 @@ export const NotesList = observer(() => {
           </div>
         ))}
       </div>
-      <CreateNoteModal
+      <NotesModal
         open={isCreateNoteModalOpen}
-        onClose={() => setIsCreateNoteModalOpen(false)}
+        onClose={handleCloseModal}
+        editNoteId={editingNoteId}
       />
     </div>
   )

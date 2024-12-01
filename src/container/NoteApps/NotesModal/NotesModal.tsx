@@ -1,22 +1,32 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { observer } from 'mobx-react'
 import Modal from '@/components/Modal/Model'
 import Input from '@/components/Input/Input'
 import TiptapEditor from '@/components/Editor/TiptapEditor'
 import { noteStore } from '@/stores/NoteStore'
+import { NoteModalProps } from './NotesModalTypes'
 
-type CreateNoteModalProps = {
-  open: boolean
-  onClose: () => void
-}
-
-export const CreateNoteModal = observer(({ open, onClose }: CreateNoteModalProps) => {
+export const NotesModal = observer(({ open, onClose, editNoteId }: NoteModalProps) => {
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
 
+  useEffect(() => {
+    if (editNoteId) {
+      const note = noteStore.notes.find(n => n.id === editNoteId)
+      if (note) {
+        setTitle(note.title)
+        setContent(note.content)
+      }
+    }
+  }, [editNoteId])
+
   const handleSave = () => {
     if (title.trim() && noteStore.activeFolder) {
-      noteStore.addNote(title.trim(), content, noteStore.activeFolder)
+      if (editNoteId) {
+        noteStore.editNote(editNoteId, title.trim(), content)
+      } else {
+        noteStore.addNote(title.trim(), content, noteStore.activeFolder)
+      }
       handleClose()
     }
   }
@@ -31,12 +41,12 @@ export const CreateNoteModal = observer(({ open, onClose }: CreateNoteModalProps
     <Modal
       open={open}
       onOpen={onClose}
-      title="Create A New Note"
-      description="Capture your thoughts, ideas, and inspirations"
+      title={editNoteId ? "Edit Note" : "Create A New Note"}
+      description={editNoteId ? "Update your note" : "Capture your thoughts, ideas, and inspirations"}
       primaryButton={{
-        label: 'Save',
+        label: editNoteId ? 'Save Changes' : 'Save',
         onClick: handleSave,
-        disabled: !title.trim() || !noteStore.activeFolder,
+        disabled: !title.trim() || (!editNoteId && !noteStore.activeFolder),
       }}
       secondaryButton={{
         label: 'Cancel',
