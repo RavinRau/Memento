@@ -47,7 +47,7 @@ export const NotesList = observer(() => {
   const renderNotes = () => (
     <>
       <div className="flex justify-end items-center">
-        <Button onClick={() => setIsCreateNoteModalOpen(true)} disabled={!noteStore.activeFolder}>
+        <Button onClick={() => setIsCreateNoteModalOpen(true)}>
           Add Note
         </Button>
       </div>

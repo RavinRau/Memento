@@ -21,7 +21,6 @@ export const NotesApp = observer(() => {
 
   const handleFolderToggle = (folder: FileItem) => {
     folderStore.setActiveFolder(folder.id)
-    noteStore.setActiveFolder(folder.id)
   }
 
   const renderHeader = () => {

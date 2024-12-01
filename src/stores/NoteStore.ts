@@ -1,10 +1,10 @@
 import { makeAutoObservable } from 'mobx'
 import { Note } from '@/types/NoteTypes'
+import { folderStore } from './FolderStore'
 
 class NoteStore {
   notes: Note[] = []
   initialized = false
-  activeFolder: string | null = null
 
   constructor() {
     makeAutoObservable(this)
@@ -24,9 +24,6 @@ class NoteStore {
     localStorage.setItem('notes', JSON.stringify(this.notes))
   }
 
-  setActiveFolder = (folderId: string | null) => {
-    this.activeFolder = folderId
-  }
 
   addNote = (title: string, content: string, folderId: string) => {
     const newNote: Note = {
@@ -60,9 +57,9 @@ class NoteStore {
   }
 
   get activeNotes() {
-    if (!this.activeFolder) return []
+    if (!folderStore.activeFolder) return []
     return this.notes
-      .filter((note) => note.folderId === this.activeFolder)
+      .filter((note) => note.folderId === folderStore.activeFolder)
       .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())
   }
 
