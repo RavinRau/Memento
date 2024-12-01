@@ -34,12 +34,14 @@ class FolderStore {
   }
 
   addFolder = (name: string) => {
+    const id = crypto.randomUUID()
     const newFolder: FileItem = {
-      id: crypto.randomUUID(),
+      id: id,
       name,
       isActive: false,
     }
     this.folders.push(newFolder)
+    this.setActiveFolder(id)
     this.saveFolders()
   }
 

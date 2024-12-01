@@ -3,13 +3,10 @@ import { observer } from 'mobx-react'
 import Modal from '@/components/Modal/Model'
 import Input from '@/components/Input/Input'
 import { folderStore } from '@/stores/FolderStore'
+import { FolderModalProps } from './FolderModalTypes'
 
-type CreateFolderModalProps = {
-  open: boolean
-  onClose: () => void
-}
 
-export const CreateFolderModal = observer(({ open, onClose }: CreateFolderModalProps) => {
+export const CreateFolderModal = observer(({ open, onClose }: FolderModalProps) => {
   const [folderName, setFolderName] = useState('')
 
   const handleSave = () => {
