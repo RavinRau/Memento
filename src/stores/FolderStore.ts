@@ -2,6 +2,7 @@ import { makeAutoObservable } from 'mobx'
 import { FileItem } from '@/components/Sidebar/SidebarTypes'
 import { DropdownItemProps } from '@/components/Dropdown/DropdownTypes'
 import { noteStore } from './NoteStore'
+import { toast } from 'sonner'
 
 class FolderStore {
   folders: FileItem[] = []
@@ -17,14 +18,14 @@ class FolderStore {
 
     const savedFolders = localStorage.getItem('folders')
     const savedActiveFolder = localStorage.getItem('activeFolder')
-    
+
     if (savedFolders) {
       this.folders = JSON.parse(savedFolders)
     }
     if (savedActiveFolder) {
       this.setActiveFolder(savedActiveFolder)
     }
-    
+
     this.initialized = true
   }
 
@@ -43,17 +44,34 @@ class FolderStore {
     this.folders.push(newFolder)
     this.setActiveFolder(id)
     this.saveFolders()
+    toast.success('Folder has been created', {
+      description: `You can now add notes to ${name}`,
+    })
   }
 
   setActiveFolder = (folderId: string | null) => {
     this.activeFolder = folderId
-    
+
     // Update isActive state for all folders
-    this.folders = this.folders.map(folder => ({
+    this.folders = this.folders.map((folder) => ({
       ...folder,
-      isActive: folder.id === folderId
+      isActive: folder.id === folderId,
     }))
-    
+
+    this.saveFolders()
+  }
+
+  editFolder = (folderId: string, name: string) => {
+    const folderIndex = this.folders.findIndex((folder) => folder.id === folderId)
+    if (folderIndex !== -1) {
+      this.folders[folderIndex].name = name
+      this.saveFolders()
+    }
+  }
+
+  deleteFolder = (folderId: string) => {
+    this.folders = this.folders.filter((folder) => folder.id !== folderId)
+    console.log(this.folders)
     this.saveFolders()
   }
 
@@ -62,16 +80,12 @@ class FolderStore {
   }
 
   getFolderSubmenuItems = (noteId: string): DropdownItemProps[] => {
-    const handleMoveNote = (noteId: string, targetFolderId: string) => {
-        noteStore.moveNote(noteId, targetFolderId)
-      }
-
     return folderStore.folders
-      .filter(folder => folder.id !== folderStore.activeFolder)
-      .map(folder => ({
+      .filter((folder) => folder.id !== folderStore.activeFolder)
+      .map((folder) => ({
         type: 'item' as const,
         text: folder.name,
-        onClick: () => handleMoveNote(noteId, folder.id)
+        onClick: () => noteStore.moveNote(noteId, folder.id),
       }))
   }
 }

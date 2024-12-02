@@ -40,6 +40,7 @@ export const NotesList = observer(() => {
     {
       type: 'item',
       icon: <Trash2 className="h-4 w-4" />,
+      className: 'text-destructive-100',
       text: 'Delete',
       onClick: (noteId: string) => noteStore.deleteNote(noteId),
     },
@@ -48,17 +49,15 @@ export const NotesList = observer(() => {
   const renderNotes = () => (
     <>
       <div className="flex justify-end items-center">
-        <Button onClick={() => setIsCreateNoteModalOpen(true)}>
-          Add Note
-        </Button>
+        <Button onClick={() => setIsCreateNoteModalOpen(true)}>Add Note</Button>
       </div>
-      <div className="flex flex-wrap py-4 gap-4">
+      <div className="flex flex-wrap py-6 gap-4">
         {noteStore.activeNotes.map((note) => (
           <CardWithDropdown
             key={note.id}
             title={note.title}
             dropdownItems={cardDropdownItems}
-            noteId={note.id}
+            id={note.id}
           >
             {stripHtmlTags(note.content)}
           </CardWithDropdown>

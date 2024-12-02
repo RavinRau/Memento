@@ -1,6 +1,7 @@
 import { makeAutoObservable } from 'mobx'
 import { Note } from '@/types/NoteTypes'
 import { folderStore } from './FolderStore'
+import { toast } from 'sonner'
 
 class NoteStore {
   notes: Note[] = []
@@ -65,6 +66,9 @@ class NoteStore {
 
   moveNote = (noteId: string, targetFolderId: string) => {
     const noteIndex = this.notes.findIndex(note => note.id === noteId)
+    const targetFolder = folderStore.folders.find(folder => folder.id === targetFolderId)
+    const selectedNote = this.notes.find(note => note.id === noteId)
+
     if (noteIndex !== -1) {
       this.notes[noteIndex] = {
         ...this.notes[noteIndex],
@@ -72,6 +76,7 @@ class NoteStore {
         updatedAt: new Date().toISOString(),
       }
       this.saveNotes()
+      toast.success(`${selectedNote?.title} has been moved to ${targetFolder?.name}`)
     }
   }
 }

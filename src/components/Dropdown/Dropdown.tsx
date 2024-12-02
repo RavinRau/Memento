@@ -24,9 +24,12 @@ export const Dropdown = ({
   showDescription = false,
   disabled,
   align,
-  noteId,
+  id,
 }: DropdownProps) => {
-  const resolveItems = (items: DropdownItemProps[] | ((id: string) => DropdownItemProps[]) | undefined, id?: string) => {
+  const resolveItems = (
+    items: DropdownItemProps[] | ((id: string) => DropdownItemProps[]) | undefined,
+    id?: string
+  ) => {
     if (typeof items === 'function' && id) {
       return items(id)
     }
@@ -60,7 +63,7 @@ export const Dropdown = ({
           return (
             <DropdownMenuItem
               key={key}
-              onClick={() => i.onClick?.(noteId || '')}
+              onClick={() => i.onClick?.(id || '')}
               className={cn({ block: showDescription }, i.className)}
               disabled={i.disabled}
             >
@@ -68,14 +71,14 @@ export const Dropdown = ({
             </DropdownMenuItem>
           )
         case 'group':
-          const groupItems = resolveItems(i.items, noteId)
+          const groupItems = resolveItems(i.items, id)
           return (
             <DropdownMenuGroup key={`group-${key}`}>
               {renderMenuItems(groupItems as DropdownItemProps[], `group-${key}-`)}
             </DropdownMenuGroup>
           )
         case 'submenu':
-          const submenuItems = resolveItems(i.items, noteId)
+          const submenuItems = resolveItems(i.items, id)
           return (
             <DropdownMenuSub key={`submenu-${key}`}>
               <DropdownMenuSubTrigger disabled={i.disabled}>

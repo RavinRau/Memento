@@ -3,13 +3,13 @@ import { CardUI, CardContent, CardHeader, CardTitle } from '../ui/card'
 import { CardProps } from './CardTypes'
 import { cn } from '@/lib/utils'
 import Dropdown from '../Dropdown/Dropdown'
-import { MoreHorizontalIcon } from 'lucide-react'
+import { MoreVerticalIcon } from 'lucide-react'
 import { DropdownItemProps } from '../Dropdown/DropdownTypes'
 import HoverBorderGradient from '../ui/hover-border-gradient'
 import { useTruncateText } from '@/hooks/useTruncateText'
 
 interface CardWithDropdownProps extends CardProps {
-  noteId?: string
+  id?: string
   dropdownItems: DropdownItemProps[]
   children: string
 }
@@ -20,7 +20,7 @@ export function CardWithDropdown({
   classNameChildren,
   children,
   dropdownItems,
-  noteId,
+  id,
   ...props
 }: CardWithDropdownProps) {
   const truncatedContent = useTruncateText({
@@ -38,9 +38,9 @@ export function CardWithDropdown({
             <CardHeader className="flex flex-row items-center justify-between">
               <CardTitle>{title}</CardTitle>
               <Dropdown
-                label={<MoreHorizontalIcon className="h-5 w-5" />}
+                label={<MoreVerticalIcon className="h-5 w-5" />}
                 data={dropdownItems}
-                noteId={noteId}
+                id={id}
               />
             </CardHeader>
           )}

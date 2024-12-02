@@ -1,4 +1,5 @@
 export type FolderModalProps = {
-    open: boolean
-    onClose: () => void
-  }
+  open: boolean
+  onClose: () => void
+  editFolderId?: string | null
+}

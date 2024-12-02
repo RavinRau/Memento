@@ -2,18 +2,19 @@ import { useEffect } from 'react'
 import { Button } from '@/components/Button/Button'
 import SidebarFileSystem from '@/components/Sidebar/SidebarFileSystem'
 import { FileItem } from '@/components/Sidebar/SidebarTypes'
-import { Notebook, Plus } from 'lucide-react'
+import { Notebook, Pencil, Plus, Trash2 } from 'lucide-react'
 import { useState } from 'react'
 import { observer } from 'mobx-react'
-import { CreateFolderModal } from './FoldersModal/FolderModal'
+import { FolderModal } from './FoldersModal/FolderModal'
 import { folderStore } from '@/stores/FolderStore'
 import { noteStore } from '@/stores/NoteStore'
 import { NotesList } from './NoteList'
 import { WelcomeFolderScreen } from './WelcomeScreens/FolderScreen'
+import { DropdownItemProps } from '@/components/Dropdown/DropdownTypes'
 
 export const NotesApp = observer(() => {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
-
+  const [editFolderId, setEditFolderId] = useState<string | null>(null)
   useEffect(() => {
     folderStore.initialize()
     noteStore.initialize()
@@ -45,10 +46,29 @@ export const NotesApp = observer(() => {
     )
   }
 
+  const folderDropdownItems: DropdownItemProps[] = [
+    {
+      type: 'item',
+      icon: <Pencil className="h-4 w-4" />,
+      text: 'Edit',
+      onClick: (folderId: string) => {
+        setIsCreateModalOpen(true)
+        setEditFolderId(folderId)
+      },
+    },
+    {
+      type: 'item',
+      icon: <Trash2 className="h-4 w-4" />,
+      text: 'Delete',
+      onClick: (folderId: string) => folderStore.deleteFolder(folderId),
+    },
+  ]
+
   return (
     <div className="pl-[280px]" style={{ height: '100vh' }}>
       <SidebarFileSystem
         header={renderHeader()}
+        dropdownItems={folderDropdownItems}
         items={folderStore.getFolders}
         onFolderToggle={handleFolderToggle}
       />
@@ -57,7 +77,11 @@ export const NotesApp = observer(() => {
       ) : (
         <NotesList />
       )}
-      <CreateFolderModal open={isCreateModalOpen} onClose={() => setIsCreateModalOpen(false)} />
+      <FolderModal
+        open={isCreateModalOpen}
+        onClose={() => setIsCreateModalOpen(false)}
+        editFolderId={editFolderId}
+      />
     </div>
   )
 })

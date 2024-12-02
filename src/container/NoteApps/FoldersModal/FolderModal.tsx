@@ -1,17 +1,29 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { observer } from 'mobx-react'
 import Modal from '@/components/Modal/Model'
 import Input from '@/components/Input/Input'
 import { folderStore } from '@/stores/FolderStore'
 import { FolderModalProps } from './FolderModalTypes'
 
-
-export const CreateFolderModal = observer(({ open, onClose }: FolderModalProps) => {
+export const FolderModal = observer(({ open, onClose, editFolderId }: FolderModalProps) => {
   const [folderName, setFolderName] = useState('')
+
+  useEffect(() => {
+    if (editFolderId) {
+      const folder = folderStore.folders.find((f) => f.id === editFolderId)
+      if (folder) {
+        setFolderName(folder.name)
+      }
+    }
+  }, [editFolderId])
 
   const handleSave = () => {
     if (folderName.trim()) {
-      folderStore.addFolder(folderName.trim())
+      if (editFolderId) {
+        folderStore.editFolder(editFolderId, folderName.trim())
+      } else {
+        folderStore.addFolder(folderName.trim())
+      }
       setFolderName('')
       onClose()
     }
@@ -26,10 +38,14 @@ export const CreateFolderModal = observer(({ open, onClose }: FolderModalProps) 
     <Modal
       open={open}
       onOpen={onClose}
-      title="Create A New Folder"
-      description="A cozy new home for your brilliant ideas and scattered thoughts"
+      title={editFolderId ? 'Edit Folder' : 'Create A New Folder'}
+      description={
+        editFolderId
+          ? 'Refine your folder name that suits your thoughts'
+          : 'Capture your thoughts, ideas, and inspirations'
+      }
       primaryButton={{
-        label: 'Save',
+        label: editFolderId ? 'Save Changes' : 'Save',
         onClick: handleSave,
         disabled: !folderName.trim(),
       }}
@@ -44,6 +60,11 @@ export const CreateFolderModal = observer(({ open, onClose }: FolderModalProps) 
         placeholder="Give some interesting name"
         value={folderName}
         onChange={(e) => setFolderName(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            handleSave()
+          }
+        }}
         autoFocus
       />
     </Modal>

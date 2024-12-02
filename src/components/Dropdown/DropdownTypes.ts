@@ -23,5 +23,5 @@ export type DropdownProps = {
   classNameTrigger?: string
   disabled?: boolean
   align?: 'center' | 'start' | 'end'
-  noteId?: string
+  id?: string
 }

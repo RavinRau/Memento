@@ -1,4 +1,5 @@
 import { ReactNode } from 'react'
+import { DropdownItemProps } from '../Dropdown/DropdownTypes'
 
 export type SidebarProps = {
   header?: ReactNode
@@ -17,4 +18,5 @@ export type FileItem = {
 export type SidebarFileSystemProps = SidebarProps & {
   items: FileItem[]
   onFolderToggle?: (folder: FileItem) => void
+  dropdownItems?: DropdownItemProps[]
 }
