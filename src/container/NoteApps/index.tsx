@@ -11,10 +11,14 @@ import { noteStore } from '@/stores/NoteStore'
 import { NotesList } from './NoteList'
 import { WelcomeFolderScreen } from './WelcomeScreens/FolderScreen'
 import { DropdownItemProps } from '@/components/Dropdown/DropdownTypes'
+import Confirmation from '@/components/Confirmation/Confirmation'
 
 export const NotesApp = observer(() => {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
   const [editFolderId, setEditFolderId] = useState<string | null>(null)
+  const [showConfirmation, setShowConfirmation] = useState(false)
+  const [folderToDelete, setFolderToDelete] = useState<string | null>(null)
+
   useEffect(() => {
     folderStore.initialize()
     noteStore.initialize()
@@ -60,7 +64,11 @@ export const NotesApp = observer(() => {
       type: 'item',
       icon: <Trash2 className="h-4 w-4" />,
       text: 'Delete',
-      onClick: (folderId: string) => folderStore.deleteFolder(folderId),
+      className: 'text-destructive-100',
+      onClick: (folderId: string) => {
+        setFolderToDelete(folderId)
+        setShowConfirmation(true)
+      },
     },
   ]
 
@@ -81,6 +89,22 @@ export const NotesApp = observer(() => {
         open={isCreateModalOpen}
         onClose={() => setIsCreateModalOpen(false)}
         editFolderId={editFolderId}
+      />
+      <Confirmation 
+        open={showConfirmation}
+        title="Delete folder"
+        description="Are you sure you want to delete this folder?"
+        onConfirm={() => {
+          if (folderToDelete) {
+            folderStore.deleteFolder(folderToDelete)
+          }
+          setShowConfirmation(false)
+          setFolderToDelete(null)
+        }}
+        onCancel={() => {
+          setShowConfirmation(false)
+          setFolderToDelete(null)
+        }}
       />
     </div>
   )
