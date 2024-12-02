@@ -16,6 +16,7 @@ const Confirmation = ({
   onConfirm, 
   onCancel,
   actionLabel = 'Continue',
+  actionClassName,
   cancelLabel = 'Cancel',
   open 
 }: ConfirmationProps) => {
@@ -30,7 +31,7 @@ const Confirmation = ({
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel onClick={onCancel}>{cancelLabel}</AlertDialogCancel>
-          <AlertDialogAction onClick={onConfirm}>{actionLabel}</AlertDialogAction>
+          <AlertDialogAction className={actionClassName} onClick={onConfirm}>{actionLabel}</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

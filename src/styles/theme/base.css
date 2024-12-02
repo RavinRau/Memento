@@ -35,12 +35,12 @@
   --neutral-0: #ffffff;
 
   /* Destructive Colors */
-  --destructive-100: #ef4444;
-  --destructive-80: #dc2626;
-  --destructive-60: #b91c1c;
-  --destructive-40: #991b1b;
-  --destructive-20: #7f1d1d;
-  --destructive-10: #450a0a;
+  --destructive-100: #8c1517;
+  --destructive-80: #bb1c1f;
+  --destructive-60: #e92327;
+  --destructive-40: #ee4f52;
+  --destructive-20: #f27b7d;
+  --destructive-10: #fef4f4;
 
   /* Accent Colors */
   --accent-100: #f4f4f5;

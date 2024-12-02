@@ -5,5 +5,6 @@ export type ConfirmationProps = {
   onCancel: () => void
   open: boolean
   actionLabel?: string
+  actionClassName?: string
   cancelLabel?: string
 }

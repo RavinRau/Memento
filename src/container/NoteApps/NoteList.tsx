@@ -9,10 +9,13 @@ import { folderStore } from '@/stores/FolderStore'
 import { Pencil, Trash2, FolderInput } from 'lucide-react'
 import { WelcomeNoteScreen } from './WelcomeScreens/NoteScreen'
 import { stripHtmlTags } from '@/utils/formatContent'
+import Confirmation from '@/components/Confirmation/Confirmation'
 
 export const NotesList = observer(() => {
   const [isCreateNoteModalOpen, setIsCreateNoteModalOpen] = useState(false)
   const [editingNoteId, setEditingNoteId] = useState<string | null>(null)
+  const [showConfirmation, setShowConfirmation] = useState(false)
+  const [noteToDelete, setNoteToDelete] = useState<string | null>(null)
 
   const handleEdit = (noteId: string) => {
     setEditingNoteId(noteId)
@@ -40,9 +43,12 @@ export const NotesList = observer(() => {
     {
       type: 'item',
       icon: <Trash2 className="h-4 w-4" />,
-      className: 'text-destructive-100',
+      className: 'text-destructive-60 focus:bg-destructive-10 focus:text-destructive-80',
       text: 'Delete',
-      onClick: (noteId: string) => noteStore.deleteNote(noteId),
+      onClick: (noteId: string) => {
+        setNoteToDelete(noteId)
+        setShowConfirmation(true)
+      },
     },
   ]
 
@@ -77,6 +83,24 @@ export const NotesList = observer(() => {
         open={isCreateNoteModalOpen}
         onClose={handleCloseModal}
         editNoteId={editingNoteId}
+      />
+      <Confirmation
+        open={showConfirmation}
+        title="Delete Notes"
+        description="Are you sure you want to delete this note?"
+        actionLabel="Delete Note"
+        actionClassName="bg-destructive-60 text-neutral-0 hover:bg-destructive-80"
+        onConfirm={() => {
+          if (noteToDelete) {
+            noteStore.deleteNote(noteToDelete)
+          }
+          setShowConfirmation(false)
+          setNoteToDelete(null)
+        }}
+        onCancel={() => {
+          setShowConfirmation(false)
+          setNoteToDelete(null)
+        }}
       />
     </div>
   )

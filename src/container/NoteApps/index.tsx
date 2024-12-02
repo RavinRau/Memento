@@ -64,7 +64,7 @@ export const NotesApp = observer(() => {
       type: 'item',
       icon: <Trash2 className="h-4 w-4" />,
       text: 'Delete',
-      className: 'text-destructive-100',
+      className: 'text-destructive-60 focus:bg-destructive-10 focus:text-destructive-80',
       onClick: (folderId: string) => {
         setFolderToDelete(folderId)
         setShowConfirmation(true)
@@ -90,10 +90,12 @@ export const NotesApp = observer(() => {
         onClose={() => setIsCreateModalOpen(false)}
         editFolderId={editFolderId}
       />
-      <Confirmation 
+      <Confirmation
         open={showConfirmation}
         title="Delete folder"
-        description="Are you sure you want to delete this folder?"
+        description="Are you sure you want to delete this folder? You will lose all notes in this folder."
+        actionLabel="Delete Folder"
+        actionClassName="bg-destructive-60 text-neutral-0 hover:bg-destructive-80"
         onConfirm={() => {
           if (folderToDelete) {
             folderStore.deleteFolder(folderToDelete)
