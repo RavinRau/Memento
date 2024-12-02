@@ -6,7 +6,7 @@ import { useState } from 'react'
 import { NotesModal } from './NotesModal/NotesModal'
 import { noteStore } from '@/stores/NoteStore'
 import { folderStore } from '@/stores/FolderStore'
-import { Pencil, Trash2, FolderInput } from 'lucide-react'
+import { Trash2, FolderInput } from 'lucide-react'
 import { WelcomeNoteScreen } from './WelcomeScreens/NoteScreen'
 import { stripHtmlTags } from '@/utils/formatContent'
 import Confirmation from '@/components/Confirmation/Confirmation'
@@ -28,12 +28,6 @@ export const NotesList = observer(() => {
   }
 
   const cardDropdownItems: DropdownItemProps[] = [
-    {
-      type: 'item',
-      icon: <Pencil className="h-4 w-4" />,
-      text: 'Edit',
-      onClick: (noteId: string) => handleEdit(noteId),
-    },
     {
       type: 'submenu',
       icon: <FolderInput className="h-4 w-4" />,
@@ -62,8 +56,10 @@ export const NotesList = observer(() => {
           <CardWithDropdown
             key={note.id}
             title={note.title}
+            onClick={() => handleEdit(note.id)}
             dropdownItems={cardDropdownItems}
             id={note.id}
+            description={'updated time'}
           >
             {stripHtmlTags(note.content)}
           </CardWithDropdown>

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { CardUI, CardContent, CardHeader, CardTitle } from '../ui/card'
+import { CardUI, CardContent, CardHeader, CardTitle, CardDescription } from '../ui/card'
 import { CardProps } from './CardTypes'
 import { cn } from '@/lib/utils'
 import Dropdown from '../Dropdown/Dropdown'
@@ -21,30 +21,39 @@ export function CardWithDropdown({
   children,
   dropdownItems,
   id,
+  onClick,
+  description,
   ...props
 }: CardWithDropdownProps) {
   const truncatedContent = useTruncateText({
     text: children,
-    limit: 350,
+    limit: 300,
   })
   return (
     <div>
       <HoverBorderGradient containerClassName="w-full h-full" className={className}>
         <CardUI
-          className={cn('w-[25rem] h-[15.625rem] bg-background border rounded-lg', className)}
+          className={cn(
+            'w-[25rem] bg-background border rounded-lg cursor-pointer overflow-hidden',
+            className
+          )}
+          onClick={onClick}
           {...props}
         >
           {title && (
-            <CardHeader className="flex flex-row items-center justify-between">
-              <CardTitle>{title}</CardTitle>
-              <Dropdown
-                label={<MoreVerticalIcon className="h-5 w-5" />}
-                data={dropdownItems}
-                id={id}
-              />
+            <CardHeader>
+              <div className="flex flex-row items-center justify-between">
+                <CardTitle className="truncate">{title}</CardTitle>
+                <Dropdown
+                  label={<MoreVerticalIcon className="h-5 w-5" />}
+                  data={dropdownItems}
+                  id={id}
+                />
+              </div>
+              {description && <CardDescription>{description}</CardDescription>}
             </CardHeader>
           )}
-          <CardContent className={cn('text-label', classNameChildren)}>
+          <CardContent className={cn('text-label h-[10rem]', classNameChildren)}>
             {truncatedContent}
           </CardContent>
         </CardUI>
