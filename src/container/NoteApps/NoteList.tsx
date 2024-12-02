@@ -10,6 +10,7 @@ import { Trash2, FolderInput } from 'lucide-react'
 import { WelcomeNoteScreen } from './WelcomeScreens/NoteScreen'
 import { stripHtmlTags } from '@/utils/formatContent'
 import Confirmation from '@/components/Confirmation/Confirmation'
+import { format } from 'date-fns'
 
 export const NotesList = observer(() => {
   const [isCreateNoteModalOpen, setIsCreateNoteModalOpen] = useState(false)
@@ -59,7 +60,7 @@ export const NotesList = observer(() => {
             onClick={() => handleEdit(note.id)}
             dropdownItems={cardDropdownItems}
             id={note.id}
-            description={'updated time'}
+            description={`updated at ${format(note.updatedAt, 'dd/MM/yyyy hh:mm aaa')}`}
           >
             {stripHtmlTags(note.content)}
           </CardWithDropdown>

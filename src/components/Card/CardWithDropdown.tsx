@@ -53,7 +53,10 @@ export function CardWithDropdown({
               {description && <CardDescription>{description}</CardDescription>}
             </CardHeader>
           )}
-          <CardContent className={cn('text-label h-[10rem]', classNameChildren)}>
+          <CardContent
+            className={cn('text-label h-[10rem]', classNameChildren)}
+            style={{ overflowWrap: 'anywhere' }}
+          >
             {truncatedContent}
           </CardContent>
         </CardUI>

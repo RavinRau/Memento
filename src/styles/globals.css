@@ -21,3 +21,7 @@
   height: 0;
   pointer-events: none;
 }
+
+.prose {
+  overflow-wrap: anywhere !important;
+}
