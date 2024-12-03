@@ -13,3 +13,9 @@ export type EditorToolbarProps = {
   editor: Editor | null
   className?: string
 }
+
+export type TiptapEditorProps = {
+  content: string
+  onChange?: (content: string) => void
+  placeholder?: string
+}

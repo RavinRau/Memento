@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 
-interface TruncateOptions {
+type TruncateOptions = {
   text: string
   limit?: number
   suffix?: string

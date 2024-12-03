@@ -8,12 +8,8 @@ import BulletList from '@tiptap/extension-bullet-list'
 import OrderedList from '@tiptap/extension-ordered-list'
 import ListItem from '@tiptap/extension-list-item'
 import Blockquote from '@tiptap/extension-blockquote'
+import { TiptapEditorProps } from './EditorType'
 
-interface TiptapEditorProps {
-  content: string
-  onChange?: (content: string) => void
-  placeholder?: string
-}
 
 const TiptapEditor = ({
   content,

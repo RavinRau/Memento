@@ -1,18 +1,12 @@
 import * as React from 'react'
 import { CardUI, CardContent, CardHeader, CardTitle, CardDescription } from '../ui/card'
-import { CardProps } from './CardTypes'
+import { CardWithDropdownProps } from './CardTypes'
 import { cn } from '@/lib/utils'
 import Dropdown from '../Dropdown/Dropdown'
 import { MoreVerticalIcon } from 'lucide-react'
-import { DropdownItemProps } from '../Dropdown/DropdownTypes'
 import HoverBorderGradient from '../ui/hover-border-gradient'
 import { useTruncateText } from '@/hooks/useTruncateText'
 
-interface CardWithDropdownProps extends CardProps {
-  id?: string
-  dropdownItems: DropdownItemProps[]
-  children: string
-}
 
 export const CardWithDropdown = ({
   className,
