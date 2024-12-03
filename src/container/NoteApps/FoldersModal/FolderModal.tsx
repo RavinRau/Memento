@@ -8,14 +8,10 @@ import { FolderModalProps } from './FolderModalTypes'
 export const FolderModal = observer(({ open, onClose, editFolderId }: FolderModalProps) => {
   const [folderName, setFolderName] = useState('')
 
-  useEffect(() => {
-    if (editFolderId) {
-      const folder = folderStore.folders.find((f) => f.id === editFolderId)
-      if (folder) {
-        setFolderName(folder.name)
-      }
-    }
-  }, [editFolderId])
+  const handleClose = () => {
+    setFolderName('')
+    onClose()
+  }
 
   const handleSave = () => {
     if (folderName.trim()) {
@@ -24,15 +20,19 @@ export const FolderModal = observer(({ open, onClose, editFolderId }: FolderModa
       } else {
         folderStore.addFolder(folderName.trim())
       }
-      setFolderName('')
-      onClose()
+      handleClose()
     }
   }
 
-  const handleClose = () => {
+  useEffect(() => {
     setFolderName('')
-    onClose()
-  }
+    if (editFolderId) {
+      const folder = folderStore.folders.find((f) => f.id === editFolderId)
+      if (folder) {
+        setFolderName(folder.name)
+      }
+    }
+  }, [editFolderId])
 
   return (
     <Modal

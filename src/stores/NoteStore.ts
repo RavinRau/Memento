@@ -6,6 +6,9 @@ import { toast } from 'sonner'
 class NoteStore {
   notes: Note[] = []
   initialized = false
+  isNoteModalOpen = false
+  isDeleteConfirmationOpen = false
+  selectedNoteId: string | null = null
 
   constructor() {
     makeAutoObservable(this)
@@ -26,6 +29,7 @@ class NoteStore {
   }
 
 
+  // Notes CRUD Logics
   addNote = (title: string, content: string, folderId: string) => {
     const newNote: Note = {
       id: crypto.randomUUID(),
@@ -79,6 +83,50 @@ class NoteStore {
       toast.success(`${selectedNote?.title} has been moved to ${targetFolder?.name}`)
     }
   }
+
+
+  // Notes Modal and Confirmation Logics
+  openNoteModal = (noteId?: string) => {
+    this.isNoteModalOpen = true
+    this.selectedNoteId = noteId || null
+  }
+
+  closeNoteModal = () => {
+    this.isNoteModalOpen = false
+    this.selectedNoteId = null
+  }
+
+  showDeleteConfirmation = (noteId: string) => {
+    this.isDeleteConfirmationOpen = true
+    this.selectedNoteId = noteId
+  }
+
+  onConfirmDelete = () => {
+    if(this.selectedNoteId){
+      this.deleteNote(this.selectedNoteId)
+    }
+    this.isDeleteConfirmationOpen = false
+    this.selectedNoteId = null
+  }
+
+  onCancelDelete = () => {
+    this.isDeleteConfirmationOpen = false
+    this.selectedNoteId = null
+  }
+
+  get getNoteModalStatus() {
+    return this.isNoteModalOpen
+  }
+
+  get getSelectedNoteId() {
+    return this.selectedNoteId
+  }
+
+  get getDeleteConfirmationStatus() {
+    return this.isDeleteConfirmationOpen
+  }
+
+
 }
 
 export const noteStore = new NoteStore() 

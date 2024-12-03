@@ -8,6 +8,9 @@ class FolderStore {
   folders: FileItem[] = []
   initialized = false
   activeFolder: string | null = null
+  isFolderModalOpen = false
+  selectedFolderId: string | null = null
+  isDeleteFolderConfirmationOpen = false
 
   constructor() {
     makeAutoObservable(this)
@@ -34,6 +37,7 @@ class FolderStore {
     localStorage.setItem('activeFolder', this.activeFolder || '')
   }
 
+  // Folder CRUD Logics
   addFolder = (name: string) => {
     const id = crypto.randomUUID()
     const newFolder: FileItem = {
@@ -51,8 +55,6 @@ class FolderStore {
 
   setActiveFolder = (folderId: string | null) => {
     this.activeFolder = folderId
-
-    // Update isActive state for all folders
     this.folders = this.folders.map((folder) => ({
       ...folder,
       isActive: folder.id === folderId,
@@ -66,12 +68,14 @@ class FolderStore {
     if (folderIndex !== -1) {
       this.folders[folderIndex].name = name
       this.saveFolders()
+      toast.success('Folder has been updated', {
+        description: `You can now add notes to ${name}`,
+      })
     }
   }
 
   deleteFolder = (folderId: string) => {
     this.folders = this.folders.filter((folder) => folder.id !== folderId)
-    console.log(this.folders)
     this.saveFolders()
   }
 
@@ -79,14 +83,65 @@ class FolderStore {
     return this.folders
   }
 
+  // Folder Options for Card Dropdown
   getFolderSubmenuItems = (noteId: string): DropdownItemProps[] => {
-    return folderStore.folders
-      .filter((folder) => folder.id !== folderStore.activeFolder)
+    if (this.folders.length === 0) {
+      return [
+        {
+          type: 'item',
+          text: 'No folders found',
+          disabled: true,
+        },
+      ]
+    }
+    return this.folders
+      .filter((folder) => folder.id !== this.activeFolder)
       .map((folder) => ({
         type: 'item' as const,
         text: folder.name,
         onClick: () => noteStore.moveNote(noteId, folder.id),
       }))
+  }
+
+  // Folder Modal and Confirmation Logics
+  openFolderModal = (folderId?: string) => {
+    this.isFolderModalOpen = true
+    this.selectedFolderId = folderId || null
+  }
+
+  closeFolderModal = () => {
+    this.isFolderModalOpen = false
+    this.selectedFolderId = null
+  }
+
+  showDeleteFolderConfirmation = (folderId: string) => {
+    this.isDeleteFolderConfirmationOpen = true
+    this.selectedFolderId = folderId
+  }
+
+  onConfirmDeleteFolder = () => {
+    if (this.selectedFolderId) {
+      this.deleteFolder(this.selectedFolderId)
+    }
+    this.isDeleteFolderConfirmationOpen = false
+    this.selectedFolderId = null
+  }
+
+  onCancelDeleteFolder = () => {
+    this.isDeleteFolderConfirmationOpen = false
+    this.selectedFolderId = null
+  }
+
+  get getFolderModalStatus() {
+    return this.isFolderModalOpen
+  }
+
+  get getSelectedFolderId() {
+    return this.selectedFolderId
+  }
+
+  get getDeleteFolderConfirmationStatus() {
+    return this.isDeleteFolderConfirmationOpen
   }
 }
 

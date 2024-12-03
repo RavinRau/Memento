@@ -1,34 +1,25 @@
 import Button from '@/components/Button/Button'
-import { DropdownItemProps } from '@/components/Dropdown/DropdownTypes'
+import Confirmation from '@/components/Confirmation/Confirmation'
 import CardWithDropdown from '@/components/Card/CardWithDropdown'
+import { DropdownItemProps } from '@/components/Dropdown/DropdownTypes'
 import { observer } from 'mobx-react'
-import { useState } from 'react'
 import { NotesModal } from './NotesModal/NotesModal'
 import { noteStore } from '@/stores/NoteStore'
 import { folderStore } from '@/stores/FolderStore'
-import { Trash2, FolderInput } from 'lucide-react'
+import { Trash2, FolderInput, Pencil } from 'lucide-react'
 import { WelcomeNoteScreen } from './WelcomeScreens/NoteScreen'
 import { stripHtmlTags } from '@/utils/formatContent'
-import Confirmation from '@/components/Confirmation/Confirmation'
 import { format } from 'date-fns'
 
 export const NotesList = observer(() => {
-  const [isCreateNoteModalOpen, setIsCreateNoteModalOpen] = useState(false)
-  const [editingNoteId, setEditingNoteId] = useState<string | null>(null)
-  const [showConfirmation, setShowConfirmation] = useState(false)
-  const [noteToDelete, setNoteToDelete] = useState<string | null>(null)
-
-  const handleEdit = (noteId: string) => {
-    setEditingNoteId(noteId)
-    setIsCreateNoteModalOpen(true)
-  }
-
-  const handleCloseModal = () => {
-    setIsCreateNoteModalOpen(false)
-    setEditingNoteId(null)
-  }
-
+ 
   const cardDropdownItems: DropdownItemProps[] = [
+    {
+      type: 'item',
+      icon: <Pencil className="h-4 w-4" />,
+      text: 'Edit',
+      onClick: (noteId: string) => noteStore.openNoteModal(noteId),
+    },
     {
       type: 'submenu',
       icon: <FolderInput className="h-4 w-4" />,
@@ -41,8 +32,7 @@ export const NotesList = observer(() => {
       className: 'text-destructive-60 focus:bg-destructive-10 focus:text-destructive-80',
       text: 'Delete',
       onClick: (noteId: string) => {
-        setNoteToDelete(noteId)
-        setShowConfirmation(true)
+        noteStore.showDeleteConfirmation(noteId)
       },
     },
   ]
@@ -50,14 +40,13 @@ export const NotesList = observer(() => {
   const renderNotes = () => (
     <>
       <div className="flex justify-end items-center">
-        <Button onClick={() => setIsCreateNoteModalOpen(true)}>Add Note</Button>
+        <Button onClick={() => noteStore.openNoteModal()}>Add Note</Button>
       </div>
       <div className="flex flex-wrap py-6 gap-4">
         {noteStore.activeNotes.map((note) => (
           <CardWithDropdown
             key={note.id}
             title={note.title}
-            onClick={() => handleEdit(note.id)}
             dropdownItems={cardDropdownItems}
             id={note.id}
             description={`updated at ${format(note.updatedAt, 'dd/MM/yyyy hh:mm aaa')}`}
@@ -72,32 +61,23 @@ export const NotesList = observer(() => {
   return (
     <div className="py-8 px-4 h-full">
       {noteStore.activeNotes.length === 0 ? (
-        <WelcomeNoteScreen onClick={() => setIsCreateNoteModalOpen(true)} />
+        <WelcomeNoteScreen onClick={() => noteStore.openNoteModal()} />
       ) : (
         renderNotes()
       )}
       <NotesModal
-        open={isCreateNoteModalOpen}
-        onClose={handleCloseModal}
-        editNoteId={editingNoteId}
+        open={noteStore.getNoteModalStatus}
+        onClose={noteStore.closeNoteModal}
+        editNoteId={noteStore.getSelectedNoteId}
       />
       <Confirmation
-        open={showConfirmation}
+        open={noteStore.getDeleteConfirmationStatus}
         title="Delete Notes"
         description="Are you sure you want to delete this note?"
         actionLabel="Delete Note"
         actionClassName="bg-destructive-60 text-neutral-0 hover:bg-destructive-80"
-        onConfirm={() => {
-          if (noteToDelete) {
-            noteStore.deleteNote(noteToDelete)
-          }
-          setShowConfirmation(false)
-          setNoteToDelete(null)
-        }}
-        onCancel={() => {
-          setShowConfirmation(false)
-          setNoteToDelete(null)
-        }}
+        onConfirm={noteStore.onConfirmDelete}
+        onCancel={noteStore.onCancelDelete}
       />
     </div>
   )

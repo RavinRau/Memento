@@ -3,7 +3,6 @@ import { Button } from '@/components/Button/Button'
 import SidebarFileSystem from '@/components/Sidebar/SidebarFileSystem'
 import { FileItem } from '@/components/Sidebar/SidebarTypes'
 import { Notebook, Pencil, Plus, Trash2 } from 'lucide-react'
-import { useState } from 'react'
 import { observer } from 'mobx-react'
 import { FolderModal } from './FoldersModal/FolderModal'
 import { folderStore } from '@/stores/FolderStore'
@@ -14,19 +13,10 @@ import { DropdownItemProps } from '@/components/Dropdown/DropdownTypes'
 import Confirmation from '@/components/Confirmation/Confirmation'
 
 export const NotesApp = observer(() => {
-  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
-  const [editFolderId, setEditFolderId] = useState<string | null>(null)
-  const [showConfirmation, setShowConfirmation] = useState(false)
-  const [folderToDelete, setFolderToDelete] = useState<string | null>(null)
-
   useEffect(() => {
     folderStore.initialize()
     noteStore.initialize()
   }, [])
-
-  const handleFolderToggle = (folder: FileItem) => {
-    folderStore.setActiveFolder(folder.id)
-  }
 
   const renderHeader = () => {
     return (
@@ -40,7 +30,7 @@ export const NotesApp = observer(() => {
             className="rounded-full"
             variant="ghost"
             size="icon"
-            onClick={() => setIsCreateModalOpen(true)}
+            onClick={() => folderStore.openFolderModal()}
           >
             <Plus className="h-4 w-4" />
           </Button>
@@ -55,20 +45,14 @@ export const NotesApp = observer(() => {
       type: 'item',
       icon: <Pencil className="h-4 w-4" />,
       text: 'Edit',
-      onClick: (folderId: string) => {
-        setIsCreateModalOpen(true)
-        setEditFolderId(folderId)
-      },
+      onClick: (folderId: string) => folderStore.openFolderModal(folderId),
     },
     {
       type: 'item',
       icon: <Trash2 className="h-4 w-4" />,
       text: 'Delete',
       className: 'text-destructive-60 focus:bg-destructive-10 focus:text-destructive-80',
-      onClick: (folderId: string) => {
-        setFolderToDelete(folderId)
-        setShowConfirmation(true)
-      },
+      onClick: (folderId: string) => folderStore.showDeleteFolderConfirmation(folderId),
     },
   ]
 
@@ -78,35 +62,26 @@ export const NotesApp = observer(() => {
         header={renderHeader()}
         dropdownItems={folderDropdownItems}
         items={folderStore.getFolders}
-        onFolderToggle={handleFolderToggle}
+        onFolderToggle={(folder: FileItem) => folderStore.setActiveFolder(folder.id)}
       />
       {folderStore.getFolders.length === 0 ? (
-        <WelcomeFolderScreen onClick={() => setIsCreateModalOpen(true)} />
+        <WelcomeFolderScreen onClick={() => folderStore.openFolderModal()} />
       ) : (
         <NotesList />
       )}
       <FolderModal
-        open={isCreateModalOpen}
-        onClose={() => setIsCreateModalOpen(false)}
-        editFolderId={editFolderId}
+        open={folderStore.getFolderModalStatus}
+        onClose={folderStore.closeFolderModal} 
+        editFolderId={folderStore.getSelectedFolderId}
       />
       <Confirmation
-        open={showConfirmation}
+        open={folderStore.getDeleteFolderConfirmationStatus}
         title="Delete folder"
         description="Are you sure you want to delete this folder? You will lose all notes in this folder."
         actionLabel="Delete Folder"
         actionClassName="bg-destructive-60 text-neutral-0 hover:bg-destructive-80"
-        onConfirm={() => {
-          if (folderToDelete) {
-            folderStore.deleteFolder(folderToDelete)
-          }
-          setShowConfirmation(false)
-          setFolderToDelete(null)
-        }}
-        onCancel={() => {
-          setShowConfirmation(false)
-          setFolderToDelete(null)
-        }}
+        onConfirm={folderStore.onConfirmDeleteFolder}
+        onCancel={folderStore.onCancelDeleteFolder}
       />
     </div>
   )

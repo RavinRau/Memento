@@ -14,17 +14,16 @@ interface CardWithDropdownProps extends CardProps {
   children: string
 }
 
-export function CardWithDropdown({
+export const CardWithDropdown = ({
   className,
   title,
   classNameChildren,
   children,
   dropdownItems,
   id,
-  onClick,
   description,
   ...props
-}: CardWithDropdownProps) {
+}: CardWithDropdownProps) => {
   const truncatedContent = useTruncateText({
     text: children,
     limit: 300,
@@ -37,7 +36,6 @@ export function CardWithDropdown({
             'w-[25rem] bg-background border rounded-lg cursor-pointer overflow-hidden',
             className
           )}
-          onClick={onClick}
           {...props}
         >
           {title && (

@@ -11,15 +11,18 @@ export const NotesModal = observer(({ open, onClose, editNoteId }: NoteModalProp
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
 
-  useEffect(() => {
-    if (editNoteId) {
-      const note = noteStore.notes.find(n => n.id === editNoteId)
-      if (note) {
-        setTitle(note.title)
-        setContent(note.content)
-      }
+  const clearNote = () => {
+    setTitle('')
+    setContent('')
+  }
+
+  const initializeFields = () => {
+    const note = noteStore.notes.find(n => n.id === editNoteId)
+    if (note) {
+      setTitle(note.title)
+      setContent(note.content)
     }
-  }, [editNoteId])
+  }
 
   const handleSave = () => {
     if (title.trim() && folderStore.activeFolder) {
@@ -33,10 +36,16 @@ export const NotesModal = observer(({ open, onClose, editNoteId }: NoteModalProp
   }
 
   const handleClose = () => {
-    setTitle('')
-    setContent('')
+    clearNote()
     onClose()
   }
+
+  useEffect(() => {
+    clearNote()
+    if (editNoteId) {
+      initializeFields()
+    }
+  }, [editNoteId])
 
   return (
     <Modal
