@@ -12,7 +12,6 @@ import { stripHtmlTags } from '@/utils/formatContent'
 import { format } from 'date-fns'
 
 export const NotesList = observer(() => {
- 
   const cardDropdownItems: DropdownItemProps[] = [
     {
       type: 'item',

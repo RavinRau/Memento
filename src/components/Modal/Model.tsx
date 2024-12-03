@@ -47,7 +47,11 @@ const Modal = ({
                 </Button>
               )}
               {primaryButton && (
-                <Button onClick={primaryButton.onClick} className="min-w-[6.25rem]" disabled={primaryButton.disabled}>
+                <Button
+                  onClick={primaryButton.onClick}
+                  className="min-w-[6.25rem]"
+                  disabled={primaryButton.disabled}
+                >
                   {primaryButton.label}
                 </Button>
               )}

@@ -17,7 +17,7 @@ export const NotesModal = observer(({ open, onClose, editNoteId }: NoteModalProp
   }
 
   const initializeFields = () => {
-    const note = noteStore.notes.find(n => n.id === editNoteId)
+    const note = noteStore.notes.find((n) => n.id === editNoteId)
     if (note) {
       setTitle(note.title)
       setContent(note.content)
@@ -51,8 +51,12 @@ export const NotesModal = observer(({ open, onClose, editNoteId }: NoteModalProp
     <Modal
       open={open}
       onOpen={onClose}
-      title={editNoteId ? "Edit Note" : "Create A New Note"}
-      description={editNoteId ? "Revise and refine your captured thoughts" : "Capture your thoughts, ideas, and inspirations"}
+      title={editNoteId ? 'Edit Note' : 'Create A New Note'}
+      description={
+        editNoteId
+          ? 'Revise and refine your captured thoughts'
+          : 'Capture your thoughts, ideas, and inspirations'
+      }
       primaryButton={{
         label: editNoteId ? 'Save Changes' : 'Save',
         onClick: handleSave,
@@ -74,10 +78,10 @@ export const NotesModal = observer(({ open, onClose, editNoteId }: NoteModalProp
         <div>
           <label className="text-label">Content</label>
           <TiptapEditor
-              content={content}
-              onChange={setContent}
-              placeholder="Start writing your note..."
-            />
+            content={content}
+            onChange={setContent}
+            placeholder="Start writing your note..."
+          />
         </div>
       </div>
     </Modal>

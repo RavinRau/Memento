@@ -28,7 +28,6 @@ class NoteStore {
     localStorage.setItem('notes', JSON.stringify(this.notes))
   }
 
-
   // Notes CRUD Logics
   addNote = (title: string, content: string, folderId: string) => {
     const newNote: Note = {
@@ -69,9 +68,9 @@ class NoteStore {
   }
 
   moveNote = (noteId: string, targetFolderId: string) => {
-    const noteIndex = this.notes.findIndex(note => note.id === noteId)
-    const targetFolder = folderStore.folders.find(folder => folder.id === targetFolderId)
-    const selectedNote = this.notes.find(note => note.id === noteId)
+    const noteIndex = this.notes.findIndex((note) => note.id === noteId)
+    const targetFolder = folderStore.folders.find((folder) => folder.id === targetFolderId)
+    const selectedNote = this.notes.find((note) => note.id === noteId)
 
     if (noteIndex !== -1) {
       this.notes[noteIndex] = {
@@ -83,7 +82,6 @@ class NoteStore {
       toast.success(`${selectedNote?.title} has been moved to ${targetFolder?.name}`)
     }
   }
-
 
   // Notes Modal and Confirmation Logics
   openNoteModal = (noteId?: string) => {
@@ -102,7 +100,7 @@ class NoteStore {
   }
 
   onConfirmDelete = () => {
-    if(this.selectedNoteId){
+    if (this.selectedNoteId) {
       this.deleteNote(this.selectedNoteId)
     }
     this.isDeleteConfirmationOpen = false
@@ -125,8 +123,6 @@ class NoteStore {
   get getDeleteConfirmationStatus() {
     return this.isDeleteConfirmationOpen
   }
-
-
 }
 
-export const noteStore = new NoteStore() 
+export const noteStore = new NoteStore()

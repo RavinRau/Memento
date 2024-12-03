@@ -1,37 +1,37 @@
 import {
-    AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
-    AlertDialogContent,
-    AlertDialogDescription,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogTitle,
-  } from "@/components/ui/alert-dialog"
-import { ConfirmationProps } from "./ConfirmationTypes"
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog'
+import { ConfirmationProps } from './ConfirmationTypes'
 
-const Confirmation = ({ 
-  title, 
-  description, 
-  onConfirm, 
+const Confirmation = ({
+  title,
+  description,
+  onConfirm,
   onCancel,
   actionLabel = 'Continue',
   actionClassName,
   cancelLabel = 'Cancel',
-  open 
+  open,
 }: ConfirmationProps) => {
   return (
     <AlertDialog open={open}>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>{title}</AlertDialogTitle>
-          <AlertDialogDescription>
-            {description}
-          </AlertDialogDescription>
+          <AlertDialogDescription>{description}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel onClick={onCancel}>{cancelLabel}</AlertDialogCancel>
-          <AlertDialogAction className={actionClassName} onClick={onConfirm}>{actionLabel}</AlertDialogAction>
+          <AlertDialogAction className={actionClassName} onClick={onConfirm}>
+            {actionLabel}
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

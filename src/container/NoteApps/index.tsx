@@ -71,7 +71,7 @@ export const NotesApp = observer(() => {
       )}
       <FolderModal
         open={folderStore.getFolderModalStatus}
-        onClose={folderStore.closeFolderModal} 
+        onClose={folderStore.closeFolderModal}
         editFolderId={folderStore.getSelectedFolderId}
       />
       <Confirmation

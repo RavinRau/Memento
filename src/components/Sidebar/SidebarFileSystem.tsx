@@ -37,11 +37,13 @@ const SidebarFileSystem = ({
               )}
               <span className="truncate">{item.name}</span>
             </div>
-            {dropdownItems && <Dropdown
-              label={<MoreVerticalIcon className="h-5 w-5" />}
-              data={dropdownItems}
-              id={item.id}
-            />}
+            {dropdownItems && (
+              <Dropdown
+                label={<MoreVerticalIcon className="h-5 w-5" />}
+                data={dropdownItems}
+                id={item.id}
+              />
+            )}
           </div>
         ))}
       </div>
