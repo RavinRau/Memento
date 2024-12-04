@@ -3,7 +3,7 @@ import { Note } from '@/types/NoteTypes'
 import { folderStore } from './FolderStore'
 import { toast } from 'sonner'
 
-class NoteStore {
+export class NoteStore {
   notes: Note[] = []
   initialized = false
   isNoteModalOpen = false

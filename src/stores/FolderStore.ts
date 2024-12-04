@@ -3,8 +3,9 @@ import { FileItem } from '@/components/Sidebar/SidebarTypes'
 import { DropdownItemProps } from '@/components/Dropdown/DropdownTypes'
 import { noteStore } from './NoteStore'
 import { toast } from 'sonner'
+import { isNil } from '@/lib/utils'
 
-class FolderStore {
+export class FolderStore {
   folders: FileItem[] = []
   initialized = false
   activeFolder: string | null = null
@@ -39,44 +40,125 @@ class FolderStore {
 
   // Folder CRUD Logics
   addFolder = (name: string) => {
-    const id = crypto.randomUUID()
-    const newFolder: FileItem = {
-      id: id,
-      name,
-      isActive: false,
+    try {
+      if (!name.trim()) {
+        toast.error('Folder name cannot be empty')
+        return
+      }
+
+      if (this.folders.some((folder) => folder.name.toLowerCase() === name.toLowerCase())) {
+        toast.error('Folder name must be unique', {
+          description: 'There is already a folder with this name, please type another name',
+        })
+        return
+      }
+
+      const id = crypto.randomUUID()
+      const newFolder: FileItem = {
+        id: id,
+        name,
+        isActive: false,
+      }
+      this.folders.push(newFolder)
+      this.setActiveFolder(id)
+      this.saveFolders()
+      toast.success('Folder has been created', {
+        description: `You can now add notes to ${name}`,
+      })
+    } catch (error) {
+      console.error('Error adding folder:', error)
     }
-    this.folders.push(newFolder)
-    this.setActiveFolder(id)
-    this.saveFolders()
-    toast.success('Folder has been created', {
-      description: `You can now add notes to ${name}`,
-    })
   }
 
   setActiveFolder = (folderId: string | null) => {
-    this.activeFolder = folderId
-    this.folders = this.folders.map((folder) => ({
-      ...folder,
-      isActive: folder.id === folderId,
-    }))
+    try {
+      if (isNil(folderId)) {
+        this.activeFolder = null
+        this.folders = this.folders.map((folder) => ({
+          ...folder,
+          isActive: false,
+        }))
+        toast.error('Invalid folder ID')
+        return
+      }
 
-    this.saveFolders()
+      const folderExists = this.folders.some((folder) => folder.id === folderId)
+
+      if (!folderExists) {
+        this.activeFolder = null
+        this.folders = this.folders.map((folder) => ({
+          ...folder,
+          isActive: false,
+        }))
+        toast.error('Folder not found')
+        return
+      }
+
+      this.activeFolder = folderId
+      this.folders = this.folders.map((folder) => ({
+        ...folder,
+        isActive: folder.id === folderId,
+      }))
+
+      this.saveFolders()
+    } catch (error) {
+      console.error('Error setting active folder:', error)
+    }
   }
 
   editFolder = (folderId: string, name: string) => {
-    const folderIndex = this.folders.findIndex((folder) => folder.id === folderId)
-    if (folderIndex !== -1) {
+    try {
+      if (!name.trim()) {
+        toast.error('Folder name cannot be empty')
+        return
+      }
+
+      const folderIndex = this.folders.findIndex((folder) => folder.id === folderId)
+      if (folderIndex === -1) {
+        toast.error('Folder not found')
+        return
+      }
+
       this.folders[folderIndex].name = name
       this.saveFolders()
       toast.success('Folder has been updated', {
         description: `You can now add notes to ${name}`,
       })
+    } catch (error) {
+      console.error('Error editing folder:', error)
     }
   }
 
   deleteFolder = (folderId: string) => {
-    this.folders = this.folders.filter((folder) => folder.id !== folderId)
-    this.saveFolders()
+    try {
+      if (isNil(folderId)) {
+        toast.error('Invalid folder ID')
+        return
+      }
+
+      const folderExists = this.folders.some((folder) => folder.id === folderId)
+      if (!folderExists) {
+        toast.error('Folder not found')
+        return
+      }
+
+      this.folders = this.folders.filter((folder) => folder.id !== folderId)
+
+      // Check if the active folder was deleted or if there is no active folder
+      if (this.activeFolder === folderId || this.activeFolder === null) {
+        // Set the first folder as active if it exists
+        if (this.folders.length > 0) {
+          this.setActiveFolder(this.folders[0].id)
+        } else {
+          this.activeFolder = null // No folders left
+        }
+      }
+
+      this.saveFolders()
+      toast.success('Folder has been deleted')
+    } catch (error) {
+      console.error('Error deleting folder:', error)
+    }
   }
 
   get getFolders() {
@@ -85,7 +167,7 @@ class FolderStore {
 
   // Folder Options for Card Dropdown
   getFolderSubmenuItems = (noteId: string): DropdownItemProps[] => {
-    if (this.folders.length === 0) {
+    if (this.folders.length <= 1) {
       return [
         {
           type: 'item',
@@ -139,7 +221,6 @@ class FolderStore {
   get getSelectedFolderId() {
     return this.selectedFolderId
   }
-
   get getDeleteFolderConfirmationStatus() {
     return this.isDeleteFolderConfirmationOpen
   }
