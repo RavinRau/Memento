@@ -16,31 +16,40 @@ export const CardWithDropdown = ({
   dropdownItems,
   id,
   description,
+  onClick,
   ...props
 }: CardWithDropdownProps) => {
   const truncatedContent = useTruncateText({
     text: children,
     limit: 300,
   })
+
+  const handleDropdownClick = (e: React.MouseEvent) => {
+    e.stopPropagation()
+  }
+
   return (
-    <div>
+    <div className="w-full">
       <HoverBorderGradient containerClassName="w-full h-full" className={className}>
         <CardUI
           className={cn(
-            'w-[25rem] bg-background border rounded-lg cursor-pointer overflow-hidden',
+            'h-full bg-background border rounded-lg cursor-pointer overflow-hidden',
             className
           )}
+          onClick={onClick}
           {...props}
         >
           {title && (
             <CardHeader>
               <div className="flex flex-row items-center justify-between">
                 <CardTitle className="truncate">{title}</CardTitle>
-                <Dropdown
-                  label={<MoreVerticalIcon className="h-5 w-5" />}
-                  data={dropdownItems}
-                  id={id}
-                />
+                <div onClick={handleDropdownClick}>
+                  <Dropdown
+                    label={<MoreVerticalIcon className="h-5 w-5" />}
+                    data={dropdownItems}
+                    id={id}
+                  />
+                </div>
               </div>
               {description && <CardDescription>{description}</CardDescription>}
             </CardHeader>

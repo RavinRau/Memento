@@ -6,19 +6,13 @@ import { observer } from 'mobx-react'
 import { NotesModal } from './NotesModal/NotesModal'
 import { noteStore } from '@/stores/NoteStore'
 import { folderStore } from '@/stores/FolderStore'
-import { Trash2, FolderInput, Pencil } from 'lucide-react'
+import { Trash2, FolderInput } from 'lucide-react'
 import { WelcomeNoteScreen } from './WelcomeScreens/NoteScreen'
 import { stripHtmlTags } from '@/utils/formatContent'
 import { format } from 'date-fns'
 
 export const NotesList = observer(() => {
   const cardDropdownItems: DropdownItemProps[] = [
-    {
-      type: 'item',
-      icon: <Pencil className="h-4 w-4" />,
-      text: 'Edit',
-      onClick: (noteId: string) => noteStore.openNoteModal(noteId),
-    },
     {
       type: 'submenu',
       icon: <FolderInput className="h-4 w-4" />,
@@ -41,7 +35,7 @@ export const NotesList = observer(() => {
       <div className="flex justify-end items-center">
         <Button onClick={() => noteStore.openNoteModal()}>Add Note</Button>
       </div>
-      <div className="flex flex-wrap py-6 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 py-6 gap-4">
         {noteStore.activeNotes.map((note) => (
           <CardWithDropdown
             key={note.id}
@@ -49,6 +43,7 @@ export const NotesList = observer(() => {
             dropdownItems={cardDropdownItems}
             id={note.id}
             description={`updated at ${format(note.updatedAt, 'dd/MM/yyyy hh:mm aaa')}`}
+            onClick={() => noteStore.openNoteModal(note.id)}
           >
             {stripHtmlTags(note.content)}
           </CardWithDropdown>

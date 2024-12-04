@@ -43,7 +43,7 @@ export const Dropdown = ({
 
       const renderDropdownItem = () => (
         <div
-          className={cn('flex items-center w-full', {
+          className={cn('flex items-center cursor-pointer w-full', {
             'cursor-not-allowed': i.disabled,
           })}
         >
