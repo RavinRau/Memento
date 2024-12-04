@@ -187,31 +187,51 @@ export class FolderStore {
 
   // Folder Modal and Confirmation Logics
   openFolderModal = (folderId?: string) => {
-    this.isFolderModalOpen = true
-    this.selectedFolderId = folderId || null
+    try {
+      this.isFolderModalOpen = true
+      this.selectedFolderId = folderId || null
+    } catch (error) {
+      console.error('Error opening folder modal:', error)
+    }
   }
 
   closeFolderModal = () => {
-    this.isFolderModalOpen = false
-    this.selectedFolderId = null
+    try {
+      this.isFolderModalOpen = false
+      this.selectedFolderId = null
+    } catch (error) {
+      console.error('Error closing folder modal:', error)
+    }
   }
 
   showDeleteFolderConfirmation = (folderId: string) => {
-    this.isDeleteFolderConfirmationOpen = true
-    this.selectedFolderId = folderId
+    try {
+      this.isDeleteFolderConfirmationOpen = true
+      this.selectedFolderId = folderId
+    } catch (error) {
+      console.error('Error showing delete folder confirmation:', error)
+    }
   }
 
   onConfirmDeleteFolder = () => {
-    if (this.selectedFolderId) {
-      this.deleteFolder(this.selectedFolderId)
+    try {
+      if (this.selectedFolderId) {
+        this.deleteFolder(this.selectedFolderId)
+      }
+      this.isDeleteFolderConfirmationOpen = false
+      this.selectedFolderId = null
+    } catch (error) {
+      console.error('Error confirming delete folder:', error)
     }
-    this.isDeleteFolderConfirmationOpen = false
-    this.selectedFolderId = null
   }
 
   onCancelDeleteFolder = () => {
-    this.isDeleteFolderConfirmationOpen = false
-    this.selectedFolderId = null
+    try {
+      this.isDeleteFolderConfirmationOpen = false
+      this.selectedFolderId = null
+    } catch (error) {
+      console.error('Error canceling delete folder:', error)
+    }
   }
 
   get getFolderModalStatus() {

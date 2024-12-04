@@ -11,7 +11,7 @@ jest.mock('sonner', () => ({
   },
 }))
 
-function initializeFolderStore() {
+const initializeFolderStore = () => {
   localStorage.clear()
   jest.clearAllMocks()
   return new FolderStore()

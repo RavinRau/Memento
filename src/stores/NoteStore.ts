@@ -30,34 +30,65 @@ export class NoteStore {
 
   // Notes CRUD Logics
   addNote = (title: string, content: string, folderId: string) => {
-    const newNote: Note = {
-      id: crypto.randomUUID(),
-      folderId,
-      title,
-      content,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
+    try {
+      if (!title || !content || !folderId) {
+        console.error('Invalid input: Title, content, and folder ID must be provided')
+        return
+      }
+      const newNote: Note = {
+        id: crypto.randomUUID(),
+        folderId,
+        title,
+        content,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      }
+      this.notes.push(newNote)
+      this.saveNotes()
+    } catch (error) {
+      console.error('Error adding note:', error)
     }
-    this.notes.push(newNote)
-    this.saveNotes()
   }
 
   editNote = (noteId: string, title: string, content: string) => {
-    const noteIndex = this.notes.findIndex((note) => note.id === noteId)
-    if (noteIndex !== -1) {
-      this.notes[noteIndex] = {
-        ...this.notes[noteIndex],
-        title,
-        content,
-        updatedAt: new Date().toISOString(),
+    try {
+      if (!title || !content) {
+        console.error('Invalid input: Title and content must be provided')
+        return
       }
-      this.saveNotes()
+      const noteIndex = this.notes.findIndex((note) => note.id === noteId)
+      if (noteIndex !== -1) {
+        this.notes[noteIndex] = {
+          ...this.notes[noteIndex],
+          title,
+          content,
+          updatedAt: new Date().toISOString(),
+        }
+        this.saveNotes()
+      }
+    } catch (error) {
+      console.error('Error editing note:', error)
     }
   }
 
   deleteNote = (noteId: string) => {
-    this.notes = this.notes.filter((note) => note.id !== noteId)
-    this.saveNotes()
+    try {
+      if (!noteId) {
+        console.error('Invalid note ID')
+        return
+      }
+
+      const noteExists = this.notes.some((note) => note.id === noteId)
+      if (!noteExists) {
+        console.error('Note not found')
+        return
+      }
+
+      this.notes = this.notes.filter((note) => note.id !== noteId)
+      this.saveNotes()
+    } catch (error) {
+      console.error('Error deleting note:', error)
+    }
   }
 
   get activeNotes() {
@@ -68,48 +99,72 @@ export class NoteStore {
   }
 
   moveNote = (noteId: string, targetFolderId: string) => {
-    const noteIndex = this.notes.findIndex((note) => note.id === noteId)
-    const targetFolder = folderStore.folders.find((folder) => folder.id === targetFolderId)
-    const selectedNote = this.notes.find((note) => note.id === noteId)
+    try {
+      const noteIndex = this.notes.findIndex((note) => note.id === noteId)
+      const targetFolder = folderStore.folders.find((folder) => folder.id === targetFolderId)
+      const selectedNote = this.notes.find((note) => note.id === noteId)
 
-    if (noteIndex !== -1) {
-      this.notes[noteIndex] = {
-        ...this.notes[noteIndex],
-        folderId: targetFolderId,
-        updatedAt: new Date().toISOString(),
+      if (noteIndex !== -1) {
+        this.notes[noteIndex] = {
+          ...this.notes[noteIndex],
+          folderId: targetFolderId,
+          updatedAt: new Date().toISOString(),
+        }
+        this.saveNotes()
+        toast.success(`${selectedNote?.title} has been moved to ${targetFolder?.name}`)
       }
-      this.saveNotes()
-      toast.success(`${selectedNote?.title} has been moved to ${targetFolder?.name}`)
+    } catch (error) {
+      console.error('Error moving note:', error)
     }
   }
 
   // Notes Modal and Confirmation Logics
   openNoteModal = (noteId?: string) => {
-    this.isNoteModalOpen = true
-    this.selectedNoteId = noteId || null
+    try {
+      this.isNoteModalOpen = true
+      this.selectedNoteId = noteId || null
+    } catch (error) {
+      console.error('Error opening note modal:', error)
+    }
   }
 
   closeNoteModal = () => {
-    this.isNoteModalOpen = false
-    this.selectedNoteId = null
+    try {
+      this.isNoteModalOpen = false
+      this.selectedNoteId = null
+    } catch (error) {
+      console.error('Error closing note modal:', error)
+    }
   }
 
   showDeleteConfirmation = (noteId: string) => {
-    this.isDeleteConfirmationOpen = true
-    this.selectedNoteId = noteId
+    try {
+      this.isDeleteConfirmationOpen = true
+      this.selectedNoteId = noteId
+    } catch (error) {
+      console.error('Error showing delete confirmation:', error)
+    }
   }
 
   onConfirmDelete = () => {
-    if (this.selectedNoteId) {
-      this.deleteNote(this.selectedNoteId)
+    try {
+      if (this.selectedNoteId) {
+        this.deleteNote(this.selectedNoteId)
+      }
+      this.isDeleteConfirmationOpen = false
+      this.selectedNoteId = null
+    } catch (error) {
+      console.error('Error confirming delete:', error)
     }
-    this.isDeleteConfirmationOpen = false
-    this.selectedNoteId = null
   }
 
   onCancelDelete = () => {
-    this.isDeleteConfirmationOpen = false
-    this.selectedNoteId = null
+    try {
+      this.isDeleteConfirmationOpen = false
+      this.selectedNoteId = null
+    } catch (error) {
+      console.error('Error canceling delete:', error)
+    }
   }
 
   get getNoteModalStatus() {
