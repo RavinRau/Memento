@@ -1,5 +1,5 @@
 import { InputUI } from '@/components/ui/input'
-import { cn } from '@/lib/utils'
+import { cn } from '@/utils/utils'
 import { InputProps } from './InputTypes'
 
 const Input = ({ label, placeholder, value, onChange, className, ...props }: InputProps) => {

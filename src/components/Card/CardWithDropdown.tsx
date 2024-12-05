@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { CardUI, CardContent, CardHeader, CardTitle, CardDescription } from '../ui/card'
 import { CardWithDropdownProps } from './CardTypes'
-import { cn } from '@/lib/utils'
+import { cn } from '@/utils/utils'
 import Dropdown from '../Dropdown/Dropdown'
 import { MoreVerticalIcon } from 'lucide-react'
 import HoverBorderGradient from '../ui/hover-border-gradient'

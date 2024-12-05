@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { CardUI, CardContent, CardHeader, CardTitle } from '../ui/card'
 import { CardProps } from './CardTypes'
-import { cn } from '@/lib/utils'
+import { cn } from '@/utils/utils'
 import HoverBorderGradient from '../ui/hover-border-gradient'
 
 export const Card = ({ className, title, classNameChildren, children, ...props }: CardProps) => {

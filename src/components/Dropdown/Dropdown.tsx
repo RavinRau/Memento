@@ -13,7 +13,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu'
-import { cn, isString } from '@/lib/utils'
+import { cn, isString } from '@/utils/utils'
 import { DropdownItemProps, DropdownProps } from './DropdownTypes'
 
 export const Dropdown = ({

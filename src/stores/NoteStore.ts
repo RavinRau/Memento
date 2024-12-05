@@ -32,7 +32,7 @@ export class NoteStore {
   addNote = (title: string, content: string, folderId: string) => {
     try {
       if (!title || !content || !folderId) {
-        console.error('Invalid input: Title, content, and folder ID must be provided')
+        toast.error('Invalid input: Title, content, and folder ID must be provided')
         return
       }
       const newNote: Note = {
@@ -45,6 +45,7 @@ export class NoteStore {
       }
       this.notes.push(newNote)
       this.saveNotes()
+      toast.success('Note has been created')
     } catch (error) {
       console.error('Error adding note:', error)
     }
@@ -53,7 +54,7 @@ export class NoteStore {
   editNote = (noteId: string, title: string, content: string) => {
     try {
       if (!title || !content) {
-        console.error('Invalid input: Title and content must be provided')
+        toast.error('Invalid input: Title and content must be provided')
         return
       }
       const noteIndex = this.notes.findIndex((note) => note.id === noteId)
@@ -65,6 +66,7 @@ export class NoteStore {
           updatedAt: new Date().toISOString(),
         }
         this.saveNotes()
+        toast.success('Note has been updated')
       }
     } catch (error) {
       console.error('Error editing note:', error)
@@ -74,18 +76,19 @@ export class NoteStore {
   deleteNote = (noteId: string) => {
     try {
       if (!noteId) {
-        console.error('Invalid note ID')
+        toast.error('Invalid note ID')
         return
       }
 
       const noteExists = this.notes.some((note) => note.id === noteId)
       if (!noteExists) {
-        console.error('Note not found')
+        toast.error('Note not found')
         return
       }
 
       this.notes = this.notes.filter((note) => note.id !== noteId)
       this.saveNotes()
+      toast.success('Note has been deleted')
     } catch (error) {
       console.error('Error deleting note:', error)
     }

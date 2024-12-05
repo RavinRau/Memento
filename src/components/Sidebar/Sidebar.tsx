@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils'
+import { cn } from '@/utils/utils'
 import { SidebarProps } from './SidebarTypes'
 
 const Sidebar = ({ header, children, className, width = '280px' }: SidebarProps) => {

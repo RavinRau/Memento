@@ -1,7 +1,10 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
 
-## Getting Started
+### Memento
 
+Memento is a simple note-taking app that allows you to create, edit, and delete notes. Users can create notes in respective folders and add their own notes with a markdown editor. All data is saved in the browser's local storage.
+
+
+### Getting Started
 First, run the development server:
 
 ```bash
@@ -14,27 +17,54 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Preview of the screens
+You can interact with the app live on [Memento](https://memento-2ae.pages.dev/)
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+![img.png](public/main_screen.png)
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+![img.png](public/editor_screen.png)
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+### Technologies Used
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Next.js/React
+- Tailwind CSS
+- TypeScript
+- Framer Motion
+- MobX
+- Jest
+- Prettier
 
-## Learn More
+### Folder Structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+src/
+├── components/ # Reusable components
+├── container/  # Container components
+├── hooks/      # Custom hooks
+├── pages/      # File based routing
+├── stores/     # Logic for the app
+├── utils/      # Utility functions
+├── styles/     # Global styles
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Features
 
-## Deploy on Vercel
+- Create, edit, and delete notes
+- Create, edit, and delete folders
+- Notes are saved in the browser's local storage
+- Move notes between folders
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Testing
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+To run the tests, use the following command:
+
+```bash
+npm run test
+# or
+yarn test
+# or
+pnpm test
+# or
+bun test
+```

@@ -3,7 +3,7 @@ import { FileItem } from '@/components/Sidebar/SidebarTypes'
 import { DropdownItemProps } from '@/components/Dropdown/DropdownTypes'
 import { noteStore } from './NoteStore'
 import { toast } from 'sonner'
-import { isNil } from '@/lib/utils'
+import { isNil } from '@/utils/utils'
 
 export class FolderStore {
   folders: FileItem[] = []

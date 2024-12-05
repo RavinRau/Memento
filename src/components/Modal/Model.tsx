@@ -8,7 +8,7 @@ import {
 } from '@/components/ui/dialog'
 import { Button } from '@/components/Button/Button'
 import { ModalTypes } from './ModelTypes'
-import { cn } from '@/lib/utils'
+import { cn } from '@/utils/utils'
 
 const Modal = ({
   title,

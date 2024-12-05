@@ -1,4 +1,4 @@
-import { cn, isNil, isNull, isUndefined, isObjectEmpty, isString, isEmpty, isNotEmpty } from '@/lib/utils';
+import { cn, isNil, isNull, isUndefined, isObjectEmpty, isString, isEmpty, isNotEmpty } from '@/utils/utils';
 
 describe('Utility Functions', () => {
   describe('cn', () => {

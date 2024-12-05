@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils'
+import { cn } from '@/utils/utils'
 import { SidebarFileSystemProps } from './SidebarTypes'
 import Sidebar from './Sidebar'
 import { Folder, FolderOpen, MoreVerticalIcon } from 'lucide-react'
