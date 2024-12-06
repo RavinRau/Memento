@@ -103,6 +103,19 @@ export class NoteStore {
 
   moveNote = (noteId: string, targetFolderId: string) => {
     try {
+      if (!noteId || !targetFolderId) {
+        toast.error('Invalid note ID')
+        return
+      }
+
+      const folderExists = folderStore.folders.some((folder) => folder.id === targetFolderId)
+      if (!folderExists) {
+        toast.error('Folder not found', {
+          description: 'Maybe the folder has been deleted? Please select another folder',
+        })
+        return
+      }
+
       const noteIndex = this.notes.findIndex((note) => note.id === noteId)
       const targetFolder = folderStore.folders.find((folder) => folder.id === targetFolderId)
       const selectedNote = this.notes.find((note) => note.id === noteId)
