@@ -6,6 +6,7 @@ Memento is a simple note-taking app that allows you to create, edit, and delete 
 
 ### Getting Started
 First, run the development server:
+`Please make sure to have Node.js or nvm installed on your machine. Set your node version to 22.11.0`
 
 ```bash
 npm run dev
