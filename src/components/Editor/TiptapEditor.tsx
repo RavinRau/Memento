@@ -8,6 +8,8 @@ import BulletList from '@tiptap/extension-bullet-list'
 import OrderedList from '@tiptap/extension-ordered-list'
 import ListItem from '@tiptap/extension-list-item'
 import Blockquote from '@tiptap/extension-blockquote'
+import TextStyle from '@tiptap/extension-text-style'
+import Color from '@tiptap/extension-color'
 import { TiptapEditorProps } from './EditorType'
 
 
@@ -18,6 +20,8 @@ const TiptapEditor = ({
 }: TiptapEditorProps) => {
   const editor = useEditor({
     extensions: [
+      TextStyle,
+      Color,
       StarterKit.configure({
         heading: false,
         bulletList: false,

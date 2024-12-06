@@ -12,6 +12,7 @@ import {
 } from 'lucide-react'
 import React from 'react'
 import { EditorToolbarProps, ToolbarButtonProps } from './EditorType'
+import { ColorPicker } from './ColorPicker'
 
 const ToolbarButton: React.FC<ToolbarButtonProps> = ({
   onClick,
@@ -24,7 +25,7 @@ const ToolbarButton: React.FC<ToolbarButtonProps> = ({
     onClick={onClick}
     disabled={disabled}
     title={tooltip}
-    className={`p-2 rounded hover:bg-neutral-30 transition-colors duration-100 ${
+    className={`p-2 rounded hover:bg-neutral-40 hover:text-neutral-90 transition-colors duration-100 ${
       active ? 'bg-primary-60 text-neutral-0' : 'text-neutral-90'
     } ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
   >
@@ -123,7 +124,7 @@ export const EditorToolbar: React.FC<EditorToolbarProps> = ({ editor, className 
         )
       ).map(([group, groupTools], groupIndex) => (
         <React.Fragment key={group}>
-          {groupIndex > 0 && <div className="w-px h-6 bg-gray-300 mx-1 self-center" />}
+          {groupIndex > 0 && <div className="w-px h-6 bg-neutral-30 mx-1 self-center" />}
           <div className="flex gap-1">
             {groupTools.map((tool, index) => (
               <ToolbarButton
@@ -138,7 +139,11 @@ export const EditorToolbar: React.FC<EditorToolbarProps> = ({ editor, className 
           </div>
         </React.Fragment>
       ))}
-      <div className="w-px h-6 bg-gray-300 mx-1 self-center" />
+      <div className="w-px h-6 bg-neutral-30 mx-1 self-center" />
+      <div className="flex gap-1">
+        <ColorPicker editor={editor} />
+      </div>
+      <div className="w-px h-6 bg-neutral-30 mx-1 self-center" />
       <div className="flex gap-1">
         {historyTools.map((tool, index) => (
           <ToolbarButton
