@@ -19,3 +19,7 @@ export type TiptapEditorProps = {
   onChange?: (content: string) => void
   placeholder?: string
 }
+
+export type ColorPickerProps = {
+  editor: Editor
+}
